@@ -1,0 +1,75 @@
+#include <iostream>
+#include "StudentProfile.h"
+#include "MessageQueue.h"
+#include "DoublyLinkedList.h"
+// #include "MessageQueue.cpp"
+
+int main()
+{
+    DoublyLinkedList studentList;
+    studentList.addStudent("24863293", "Ezra");
+    studentList.addStudent("24957233", "John");
+    studentList.displayCurrentStudent();
+    studentList.addNewMessage("Hello, John!", "John");
+    studentList.addNewMessage("Hello, John 2!", "John");
+    studentList.displaySentMessages();
+
+    studentList.browseForward();
+    studentList.displayCurrentStudent();
+    studentList.displayInboxMessages();
+
+    // messageQueue.dequeue();
+
+    // std::cout << "----- Student Profile Management System -----" << std::endl;
+    // std::cout << "1. Create a new student profile" << std::endl;
+    // std::cout << "2. View all student profiles" << std::endl;
+    // std::cout << "3. Add a friend" << std::endl;
+    // std::cout << "4. Send a message to another student" << std::endl;
+    // std::cout << "5. View message inbox" << std::endl;
+    // std::cout << "6. Undo last action" << std::endl;
+    // std::cout << "7. View or rotate through study group members" << std::endl;
+    // std::cout << "8. Exit the application" << std::endl;
+    // std::cout << "Please select an option (1-8): ";
+    // int choice;
+    // std::cin >> choice;
+    // while (choice < 1 || choice > 8)
+    // {
+    //     std::cout << "Invalid choice. Please select a valid option (1-8): ";
+    //     std::cin >> choice;
+    // }
+    // switch (choice)
+    // {
+    // case 1:
+    //     std::cout << "Creating a new student profile..." << std::endl;
+    //     // Logic to create a new student profile
+    //     break;
+    // case 2:
+    //     std::cout << "Viewing all student profiles..." << std::endl;
+    //     // Logic to view all student profiles
+    //     break;
+    // case 3:
+    //     std::cout << "Adding a friend..." << std::endl;
+    //     // Logic to add a friend
+    //     break;
+    // case 4:
+    //     std::cout << "Sending a message to another student..." << std::endl;
+    //     // Logic to send a message
+    //     break;
+    // case 5:
+    //     std::cout << "Viewing message inbox..." << std::endl;
+    //     // Logic to view message inbox
+    //     break;
+    // case 6:
+    //     std::cout << "Undoing last action..." << std::endl;
+    //     // Logic to undo last action
+    //     break;
+    // case 7:
+    //     std::cout << "Viewing or rotating through study group members..." << std::endl;
+    //     // Logic to view or rotate through study group members
+    //     break;
+    // case 8:
+    //     std::cout << "Exiting the application. Goodbye!" << std::endl;
+    //     return 0; // Exit the application
+    // }
+    return 0;
+}
