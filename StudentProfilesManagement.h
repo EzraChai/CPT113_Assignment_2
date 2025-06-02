@@ -5,11 +5,13 @@
 #include "MessageQueue.h"
 #include "StudentProfile.h"
 #include "StudyGroup.h"
+#include "Undo.h"
 
 class StudentProfilesManagement
 {
 private:
     DoublyLinkedList<StudentProfile> studentList;
+    Undo undoStack; // Stack to keep track of actions for undo functionality
     // CircularLinkedList<StudyGroup> studyGroupList; // Circular linked list for study group members
     // TODO: Add a linked list for study groups
     // LinkedList<StudyGroup *> studyGroups; // List of study groups

@@ -74,6 +74,7 @@ void StudentProfilesManagement::sendMessage(std::string recipientName, std::stri
         {
             currentProfile->sendToSentMessage(message, recipientName);
             recipientProfile->sendToInboxMessage(message, currentProfile->getStudentName());
+            undoStack.pushAction({ActionType::SEND_MESSAGE, currentProfile});
         }
         else
         {
