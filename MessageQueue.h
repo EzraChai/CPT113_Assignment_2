@@ -9,8 +9,6 @@ class MessageQueue
 {
     struct MessageNode
     {
-        std::string senderName;
-        std::time_t timestamp;
         T message;
         MessageNode *next;
     };
@@ -22,7 +20,7 @@ class MessageQueue
 public:
     MessageQueue();
     ~MessageQueue();
-    void enqueue(T message, std::string studentName);
+    void enqueue(T message);
     void dequeue();
     void displayMessages();
     bool isEmpty();
@@ -46,12 +44,10 @@ MessageQueue<T>::~MessageQueue()
 }
 
 template <class T>
-void MessageQueue<T>::enqueue(T message, std::string senderName)
+void MessageQueue<T>::enqueue(T message)
 {
     MessageNode *newNode = new MessageNode;
     newNode->message = message;
-    newNode->senderName = senderName;
-    newNode->timestamp = std::time(0);
 
     if (isEmpty())
     {
@@ -92,11 +88,11 @@ void MessageQueue<T>::displayMessages()
     MessageNode *current = front;
     while (current)
     {
-        time_t timestamp = current->timestamp;
+        time_t timestamp = current->message.timestamp;
         char formattedTime[20];
         std::strftime(formattedTime, sizeof(formattedTime), "%H:%M:%S %D", std::localtime(&timestamp));
         // std::cout << "Timestamp: " << formattedTime << "\nfrom: " << current->senderName << "\nMessage: " << current->message << std::endl;
-        std::cout << current->senderName << " - " << current->message << " - " << formattedTime << "\n\n";
+        std::cout << current->message.name << " - " << current->message.body << " - " << formattedTime << std::endl;
         current = current->next;
     }
     std::cout << "Total messages: " << totalMessages << std::endl;

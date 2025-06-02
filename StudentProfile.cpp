@@ -1,4 +1,5 @@
 #include "StudentProfile.h"
+#include <ctime>
 
 StudentProfile::StudentProfile()
 {
@@ -10,10 +11,8 @@ StudentProfile::StudentProfile(std::string studentId, std::string name, std::str
     this->name = name;
     this->course = course;
     this->friendHead = nullptr;
-    this->prev = nullptr;
-    this->next = nullptr;
-    this->messageInbox = MessageQueue<std::string>();
-    this->messageSent = MessageQueue<std::string>();
+    this->messageInbox = MessageQueue<Message>();
+    this->messageSent = MessageQueue<Message>();
 }
 
 std::string StudentProfile::getStudentName() const
@@ -46,11 +45,19 @@ void StudentProfile::printInboxMessages()
 void StudentProfile::sendToInboxMessage(std::string message, std::string senderName)
 {
     // Logic to send a message to another student
-    messageInbox.enqueue(message, senderName);
+    Message msg;
+    msg.body = message;
+    msg.name = senderName;
+    msg.timestamp = std::time(0); // Set the current timestamp
+    messageInbox.enqueue(msg);
 }
 
 void StudentProfile::sendToSentMessage(std::string message, std::string recipientName)
 {
     // Logic to send a message to another student
-    messageSent.enqueue(message, recipientName);
+    Message msg;
+    msg.body = message;
+    msg.name = recipientName;
+    msg.timestamp = std::time(0); // Set the current timestamp
+    messageSent.enqueue(msg);
 }

@@ -1,6 +1,7 @@
 #ifndef STUDENTPROFILE_H
 #define STUDENTPROFILE_H
 #include <string>
+#include <ctime>
 #include "MessageQueue.h"
 
 class StudentProfile
@@ -10,8 +11,15 @@ private:
     std::string name;
     std::string course;
 
-    MessageQueue<std::string> messageInbox;
-    MessageQueue<std::string> messageSent;
+    struct Message
+    {
+        std::string body;
+        std::string name;
+        std::time_t timestamp;
+    };
+
+    MessageQueue<Message> messageInbox;
+    MessageQueue<Message> messageSent;
 
     struct FriendNode
     {
@@ -22,9 +30,6 @@ private:
     FriendNode *friendHead; // Linked list of friends
 
 public:
-    StudentProfile *prev; // Pointer to the previous student profile in the linked list
-    StudentProfile *next;
-
     StudentProfile();
     StudentProfile(std::string, std::string, std::string);
 
