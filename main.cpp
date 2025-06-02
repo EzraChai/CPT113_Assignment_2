@@ -1,22 +1,37 @@
 #include <iostream>
-#include "StudentProfile.h"
-#include "MessageQueue.h"
-#include "DoublyLinkedList.h"
+#include "StudentProfilesManagement.h"
+// #include "StudentProfile.h"
+// #include "MessageQueue.h"
+// #include "DoublyLinkedList.h"
 // #include "MessageQueue.cpp"
 
 int main()
 {
-    DoublyLinkedList studentList;
-    studentList.addStudent("24863293", "Ezra");
-    studentList.addStudent("24957233", "John");
-    studentList.displayCurrentStudent();
-    studentList.addNewMessage("Hello, John!", "John");
-    studentList.addNewMessage("Hello, John 2!", "John");
-    studentList.displaySentMessages();
+    StudentProfilesManagement spf;
+    std::cout << "----- Student Profile Management System -----" << std::endl;
+    spf.createStudentProfile("24863293", "Chloe", "Computer Science");
+    spf.createStudentProfile("24863293", "Ezra", "Computer Science");
+    spf.createStudentProfile("24863293", "John", "Computer Science");
+    spf.createStudentProfile("24863293", "Zedd", "Computer Science");
+    spf.displayAllStudentProfiles();
+    spf.sendMessage("Ezra", "Hello, Ezra!");
+    spf.sendMessage("Ezra", "Hello, Ezra!");
+    spf.displaySentMessages();
 
-    studentList.browseForward();
-    studentList.displayCurrentStudent();
-    studentList.displayInboxMessages();
+    spf.browseForward();
+    spf.displayCurrentStudentProfile();
+    spf.displayInboxMessages();
+    // DoublyLinkedList studentList;
+    // studentList.addStudent("24863293", "Ezra");
+    // studentList.addStudent("24957233", "John");
+    // studentList.displayCurrentStudent();
+    // studentList.addNewMessage("Hello, John!", "John");
+    // studentList.addNewMessage("Hello, John 2!", "John");
+    // studentList.displaySentMessages();
+
+    // studentList.browseForward();
+    // studentList.displayCurrentStudent();
+    // studentList.displayInboxMessages();
 
     // messageQueue.dequeue();
 

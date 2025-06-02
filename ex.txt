@@ -1,0 +1,9 @@
+                     
+                     
+                     StudentProfileManagement
+               <>                                 <>                                                    <>
+DoublyLinkedList<StudentProfile>      LinkedList<CircularLinkedList<StudyGroup<StudentProfile>>>    Stack<Action>
+
+          StudentProfile                 CircularLinkedList<StudyGroup> 
+ 
+       MessageQueue<Message>                    

@@ -99,6 +99,7 @@ void MessageQueue<T>::displayMessages()
         std::cout << current->senderName << " - " << current->message << " - " << formattedTime << "\n\n";
         current = current->next;
     }
+    std::cout << "Total messages: " << totalMessages << std::endl;
 }
 
 #endif

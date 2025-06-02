@@ -8,6 +8,7 @@ class StudentProfile
 private:
     std::string studentId;
     std::string name;
+    std::string course;
 
     MessageQueue<std::string> messageInbox;
     MessageQueue<std::string> messageSent;
@@ -25,14 +26,16 @@ public:
     StudentProfile *next;
 
     StudentProfile();
-    StudentProfile(std::string, std::string);
+    StudentProfile(std::string, std::string, std::string);
 
     std::string getStudentName() const;
     std::string getStudentId() const;
+    std::string getCourse() const;
+    void printProfile() const;
 
     void addFriend(StudentProfile *friendProfile);
-    void sendToSentMessage(const std::string &message, const std::string &recipientName);
-    void sendToInboxMessage(const std::string &message, const std::string &recipientName);
+    void sendToSentMessage(std::string message, const std::string recipientName);
+    void sendToInboxMessage(std::string message, const std::string senderName);
 
     void printSentMessages();
     void printInboxMessages();
