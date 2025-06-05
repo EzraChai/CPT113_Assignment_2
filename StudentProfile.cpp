@@ -69,7 +69,6 @@ void StudentProfile::unsendSentMessage()
         std::cout << "No sent messages to unsend." << std::endl;
         return;
     }
-    MessageQueue<Message> messageSentCopy;
     int totalMessages = messageSent.getTotalMessages();
     for (int i = 0; i < totalMessages - 1; ++i)
     {
@@ -87,7 +86,6 @@ void StudentProfile::unsendInboxMessage()
         std::cout << "No inbox messages to unsend." << std::endl;
         return;
     }
-    MessageQueue<Message> messageInboxCopy;
     int totalMessages = messageInbox.getTotalMessages();
     for (int i = 0; i < totalMessages - 1; ++i)
     {
