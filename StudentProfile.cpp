@@ -61,3 +61,39 @@ void StudentProfile::sendToSentMessage(std::string message, std::string recipien
     msg.timestamp = std::time(0); // Set the current timestamp
     messageSent.enqueue(msg);
 }
+
+void StudentProfile::unsendSentMessage()
+{
+    if (messageSent.isEmpty())
+    {
+        std::cout << "No sent messages to unsend." << std::endl;
+        return;
+    }
+    MessageQueue<Message> messageSentCopy;
+    int totalMessages = messageSent.getTotalMessages();
+    for (int i = 0; i < totalMessages - 1; ++i)
+    {
+        Message *msg = messageSent.peek();
+        messageSent.enqueue(*msg);
+        messageSent.dequeue(); // Remove the message from the original queue
+    }
+    messageSent.dequeue();
+}
+
+void StudentProfile::unsendInboxMessage()
+{
+    if (messageInbox.isEmpty())
+    {
+        std::cout << "No inbox messages to unsend." << std::endl;
+        return;
+    }
+    MessageQueue<Message> messageInboxCopy;
+    int totalMessages = messageInbox.getTotalMessages();
+    for (int i = 0; i < totalMessages - 1; ++i)
+    {
+        Message *msg = messageInbox.peek();
+        messageInbox.enqueue(*msg);
+        messageInbox.dequeue(); // Remove the message from the original queue
+    }
+    messageInbox.dequeue();
+}

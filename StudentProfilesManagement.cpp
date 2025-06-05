@@ -73,8 +73,10 @@ void StudentProfilesManagement::sendMessage(std::string recipientName, std::stri
         if (currentProfile != nullptr && recipientProfile != nullptr)
         {
             currentProfile->sendToSentMessage(message, recipientName);
+            undo.pushAction({ActionType::SEND_MESSAGE, currentProfile});
+
             recipientProfile->sendToInboxMessage(message, currentProfile->getStudentName());
-            undoStack.pushAction({ActionType::SEND_MESSAGE, currentProfile});
+            undo.pushAction({ActionType::SEND_MESSAGE, recipientProfile});
         }
         else
         {
@@ -85,4 +87,10 @@ void StudentProfilesManagement::sendMessage(std::string recipientName, std::stri
     {
         std::cout << "No student profiles available." << std::endl;
     }
+}
+
+void StudentProfilesManagement::undoLastAction()
+{
+    // undo.displayAllAction();
+    undo.popAction(studentList);
 }

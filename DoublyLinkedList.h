@@ -34,7 +34,7 @@ public:
             nodePtr = next;
         }
     }
-    void insertNode(T *newData)
+    void insertNode(T *&newData)
     {
         Node *newNode = new Node;
         newNode->data = newData;
@@ -113,7 +113,7 @@ public:
         return nullptr; // Return nullptr if not found
     }
 
-    void deleteNode(T *node);
+    void deleteNode(T *&node);
 
     void displayAllNodes()
     {

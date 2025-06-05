@@ -11,10 +11,9 @@ private:
         Node *next;
     };
     Node *topNode;
-    int topIndex;
 
 public:
-    Stack() : topNode(nullptr), topIndex(-1) {}
+    Stack() : topNode(nullptr) {}
 
     ~Stack()
     {
@@ -24,41 +23,45 @@ public:
         }
     }
 
-    void push(T value)
+    void push(const T value)
     {
+
         Node *newNode = new Node;
         newNode->data = value;
-        newNode->next = topNode;
-        topNode = newNode;
-        topIndex++;
+
+        if (isEmpty())
+        {
+            topNode = newNode;
+            newNode->next = nullptr;
+        }
+        else
+        {
+            newNode->next = topNode;
+            topNode = newNode;
+        }
     }
 
     void pop()
     {
         if (isEmpty())
-            return;
+            throw "Stack is empty\n";
 
-        Node *temp = topNode;
-        topNode = topNode->next;
-        delete temp;
-        topIndex--;
+        Node *temp = nullptr;
+        temp = topNode->next;
+        delete topNode;
+        topNode = temp;
     }
 
     T *top() const
     {
         if (isEmpty())
-            throw std::out_of_range("Stack is empty");
-        return topNode->data;
+            throw "Stack is empty\n";
+        return &topNode->data;
     }
 
     bool isEmpty() const
     {
-        return topIndex == -1;
-    }
-
-    int size() const
-    {
-        return topIndex + 1;
+        return !topNode;
     }
 };
 

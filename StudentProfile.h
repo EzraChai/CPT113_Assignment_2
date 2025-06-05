@@ -44,6 +44,9 @@ public:
 
     void printSentMessages();
     void printInboxMessages();
+
+    void unsendSentMessage();
+    void unsendInboxMessage();
 };
 
 #endif

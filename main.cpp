@@ -15,25 +15,15 @@ int main()
     spf.createStudentProfile("24863293", "Zedd", "Computer Science");
     spf.displayAllStudentProfiles();
     spf.sendMessage("Ezra", "Hello, Ezra!");
-    spf.sendMessage("Ezra", "Hello, Ezra!");
+    spf.sendMessage("Ezra", "Hello, Ezra 2!");
+    spf.sendMessage("Ezra", "Hello, Ezra 3!");
+    spf.displaySentMessages();
+    spf.undoLastAction();
     spf.displaySentMessages();
 
     spf.browseForward();
     spf.displayCurrentStudentProfile();
     spf.displayInboxMessages();
-    // DoublyLinkedList studentList;
-    // studentList.addStudent("24863293", "Ezra");
-    // studentList.addStudent("24957233", "John");
-    // studentList.displayCurrentStudent();
-    // studentList.addNewMessage("Hello, John!", "John");
-    // studentList.addNewMessage("Hello, John 2!", "John");
-    // studentList.displaySentMessages();
-
-    // studentList.browseForward();
-    // studentList.displayCurrentStudent();
-    // studentList.displayInboxMessages();
-
-    // messageQueue.dequeue();
 
     // std::cout << "----- Student Profile Management System -----" << std::endl;
     // std::cout << "1. Create a new student profile" << std::endl;

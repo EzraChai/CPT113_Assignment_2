@@ -20,8 +20,11 @@ class MessageQueue
 public:
     MessageQueue();
     ~MessageQueue();
-    void enqueue(T message);
+    MessageQueue(const MessageQueue &other) = delete; // Disable copy constructor
+    void enqueue(T &message);
     void dequeue();
+    T *peek();
+    int getTotalMessages() const;
     void displayMessages();
     bool isEmpty();
 };
@@ -44,7 +47,7 @@ MessageQueue<T>::~MessageQueue()
 }
 
 template <class T>
-void MessageQueue<T>::enqueue(T message)
+void MessageQueue<T>::enqueue(T &message)
 {
     MessageNode *newNode = new MessageNode;
     newNode->message = message;
@@ -56,6 +59,7 @@ void MessageQueue<T>::enqueue(T message)
     }
     else
     {
+        newNode->next = nullptr; // New node will be the last node
         rear->next = newNode;
         rear = newNode;
     }
@@ -63,15 +67,21 @@ void MessageQueue<T>::enqueue(T message)
 }
 
 template <class T>
+int MessageQueue<T>::getTotalMessages() const
+{
+    return totalMessages;
+}
+
+template <class T>
 void MessageQueue<T>::dequeue()
 {
     if (isEmpty())
     {
-        std::cout << "Queue is empty. Cannot dequeue." << std::endl;
+        std::cout << "Message queue is empty. Cannot dequeue." << std::endl;
         return;
     }
     MessageNode *temp = front;
-    front = temp->next;
+    front = front->next;
     delete temp;
     totalMessages--;
 }
@@ -83,15 +93,32 @@ bool MessageQueue<T>::isEmpty()
 }
 
 template <class T>
+T *MessageQueue<T>::peek()
+{
+    if (isEmpty())
+    {
+        std::cout << "Message queue is empty. Cannot peek." << std::endl;
+        return nullptr;
+    }
+    return &front->message;
+}
+
+template <class T>
 void MessageQueue<T>::displayMessages()
 {
+    if (isEmpty())
+    {
+        std::cout << "Total messages: " << totalMessages << std::endl;
+        return;
+    }
+
     MessageNode *current = front;
+
     while (current)
     {
         time_t timestamp = current->message.timestamp;
         char formattedTime[20];
         std::strftime(formattedTime, sizeof(formattedTime), "%H:%M:%S %D", std::localtime(&timestamp));
-        // std::cout << "Timestamp: " << formattedTime << "\nfrom: " << current->senderName << "\nMessage: " << current->message << std::endl;
         std::cout << current->message.name << " - " << current->message.body << " - " << formattedTime << std::endl;
         current = current->next;
     }

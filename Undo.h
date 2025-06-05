@@ -1,6 +1,8 @@
 #ifndef UNDO_H
 #define UNDO_H
 #include "Stack.h"
+#include "StudentProfile.h"
+#include "DoublyLinkedList.h"
 
 enum class ActionType
 {
@@ -23,8 +25,9 @@ public:
     Undo();
     ~Undo();
 
-    void pushAction(Action action);
-    void popAction();
+    void pushAction(Action);
+    void popAction(DoublyLinkedList<StudentProfile> &);
+    void displayAllAction();
 };
 
 #endif
