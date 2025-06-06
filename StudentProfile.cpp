@@ -1,5 +1,6 @@
 #include "StudentProfile.h"
 #include <ctime>
+#include <iomanip>
 
 StudentProfile::StudentProfile()
 {
@@ -27,9 +28,10 @@ std::string StudentProfile::getStudentId() const
 
 void StudentProfile::printProfile() const
 {
-    std::cout << "Student Name: " << name << std::endl;
-    std::cout << "Student ID: " << studentId << std::endl;
-    std::cout << "Course: " << course << std::endl;
+    std::cout << std::setw(20) << std::left << name << std::setw(15) << studentId << std::setw(20) << course << std::endl;
+    // std::cout << "Student Name: " << name << std::endl;
+    // std::cout << "Student ID: " << studentId << std::endl;
+    // std::cout << "Course: " << course << std::endl;
 }
 
 void StudentProfile::printSentMessages()

@@ -79,6 +79,8 @@
     "text_encoding": "cpp",
     "typeinfo": "cpp",
     "variant": "cpp",
-    "queue": "cpp"
+    "queue": "cpp",
+    "iomanip": "cpp",
+    "sstream": "cpp"
   }
 }

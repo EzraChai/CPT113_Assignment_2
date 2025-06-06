@@ -1,4 +1,5 @@
 #include "StudentProfilesManagement.h"
+#include "iomanip"
 
 StudentProfilesManagement::StudentProfilesManagement()
 {
@@ -14,12 +15,28 @@ void StudentProfilesManagement::createStudentProfile(std::string studentId, std:
     undo.pushAction({ActionType::CREATE_PROFILE, newProfile});
 }
 
+void StudentProfilesManagement::searchStudentProfileByName(std::string name)
+{
+    StudentProfile *profile = studentList.searchByName(name);
+    if (profile)
+    {
+        std::cout << std::setw(20) << std::left << "Name" << std::setw(15) << "Student ID" << std::setw(20) << "Course" << std::endl;
+        profile->printProfile();
+        std::cout << std::endl;
+    }
+    else
+    {
+        std::cout << "No student profile found with the name: " << name << std::endl;
+    }
+}
+
 void StudentProfilesManagement::displayInboxMessages()
 {
     if (studentList.getCurrentNode())
     {
         std::cout << "\n------ Inbox Messages ------" << std::endl;
         studentList.getCurrentNode()->printInboxMessages();
+        std::cout << std::endl;
     }
     else
     {
@@ -33,6 +50,7 @@ void StudentProfilesManagement::displaySentMessages()
     {
         std::cout << "\n------ Sent Messages ------" << std::endl;
         studentList.getCurrentNode()->printSentMessages();
+        std::cout << std::endl;
     }
     else
     {
@@ -42,14 +60,18 @@ void StudentProfilesManagement::displaySentMessages()
 
 void StudentProfilesManagement::displayAllStudentProfiles()
 {
+    std::cout << std::setw(20) << std::left << "Name" << std::setw(15) << "Student ID" << std::setw(20) << "Course" << std::endl;
     studentList.displayAllNodes();
+    std::cout << std::endl;
 }
 
 void StudentProfilesManagement::displayCurrentStudentProfile()
 {
     if (studentList.getCurrentNode())
     {
+        std::cout << std::setw(20) << std::left << "Name" << std::setw(15) << "Student ID" << std::setw(20) << "Course" << std::endl;
         studentList.getCurrentNode()->printProfile();
+        std::cout << std::endl;
     }
     else
     {
