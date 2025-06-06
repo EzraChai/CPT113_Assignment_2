@@ -20,10 +20,12 @@ int main()
     spf.displaySentMessages();
     spf.undoLastAction();
     spf.displaySentMessages();
-
-    spf.browseForward();
-    spf.displayCurrentStudentProfile();
-    spf.displayInboxMessages();
+    spf.createStudentProfile("24863293", "Fred", "Computer Science");
+    spf.undoLastAction();
+    spf.displayAllStudentProfiles();
+    // spf.browseForward();
+    // spf.displayCurrentStudentProfile();
+    // spf.displayInboxMessages();
 
     // std::cout << "----- Student Profile Management System -----" << std::endl;
     // std::cout << "1. Create a new student profile" << std::endl;

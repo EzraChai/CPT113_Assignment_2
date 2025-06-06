@@ -113,7 +113,36 @@ public:
         return nullptr; // Return nullptr if not found
     }
 
-    void deleteNode(T *&node);
+    void deleteNode(T *&node)
+    {
+        Node *nodePtr = head;
+        while (nodePtr != nullptr)
+        {
+            if (nodePtr->data == node) // Assuming T has an operator== defined
+            {
+                if (nodePtr == head) // If it's the head node
+                {
+                    head = nodePtr->next;
+                    if (head != nullptr)
+                        head->prev = nullptr; // Update the new head's prev pointer
+                }
+                else if (nodePtr == tail) // If it's the tail node
+                {
+                    tail = nodePtr->prev;
+                    if (tail != nullptr)
+                        tail->next = nullptr; // Update the new tail's next pointer
+                }
+                else // If it's a middle node
+                {
+                    nodePtr->prev->next = nodePtr->next;
+                    nodePtr->next->prev = nodePtr->prev;
+                }
+                delete nodePtr; // Delete the node
+                return;         // Exit after deleting the node
+            }
+            nodePtr = nodePtr->next; // Move to the next node
+        }
+    }
 
     void displayAllNodes()
     {

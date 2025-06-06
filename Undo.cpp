@@ -56,9 +56,13 @@ void Undo::popAction(DoublyLinkedList<StudentProfile> &studentList)
         switch (undoStack.top()->actionType)
         {
         case ActionType::CREATE_PROFILE:
+        {
 
+            std::cout << "Undoing last action: Create Profile" << std::endl;
+            StudentProfile *sp = undoStack.top()->StudentProfilePointer;
+            studentList.deleteNode(sp);
             break;
-
+        }
         case ActionType::ADD_FRIEND:
             break;
 

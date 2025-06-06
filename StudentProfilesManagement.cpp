@@ -11,6 +11,7 @@ void StudentProfilesManagement::createStudentProfile(std::string studentId, std:
 {
     StudentProfile *newProfile = new StudentProfile(studentId, name, course);
     studentList.insertNode(newProfile);
+    undo.pushAction({ActionType::CREATE_PROFILE, newProfile});
 }
 
 void StudentProfilesManagement::displayInboxMessages()
