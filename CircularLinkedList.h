@@ -50,46 +50,41 @@ public:
         count++;
     }
 
-    void deleteNode(T *value)
+    void removeNode(T *data)
     {
-        if (tail == nullptr)
-        {
-            std::cout << "List is empty. Cannot delete." << std::endl;
+        if (!tail || count == 0)
             return;
-        }
 
         Node *current = tail->next;
         Node *prev = tail;
 
         do
         {
-            if (current->data == value)
+            if (current->data == data)
             {
-                if (currentNode == current)
+                if (current == tail) // If it's the tail node
                 {
-                    // Move currentNode to next node unless list will be empty
-                    if (current == tail && current->next == tail)
-                        currentNode = nullptr;
+                    if (tail == tail->next) // Only one node in the list
+                    {
+                        delete current;
+                        tail = nullptr;
+                        currentNode = nullptr; // Reset currentNode
+                    }
                     else
-                        currentNode = current->next;
-                }
-                if (current == tail && current->next == tail)
-                {
-                    // Single node case
-                    delete current;
-                    tail = nullptr;
-                    currentNode = nullptr;
+                    {
+                        prev->next = current->next; // Bypass the current node
+                        delete current;
+                        tail = prev;              // Update tail to previous node
+                        currentNode = tail->next; // Reset currentNode to the new first node
+                    }
                 }
                 else
                 {
-                    prev->next = current->next;
-                    if (current == tail)
-                    {
-                        tail = prev;
-                        // currentNode already updated above if needed
-                    }
+                    prev->next = current->next; // Bypass the current node
                     delete current;
+                    currentNode = prev->next; // Reset currentNode to the next node
                 }
+                count--;
                 return;
             }
             prev = current;
@@ -115,10 +110,21 @@ public:
         return nullptr;
     }
 
+    int getCount() const
+    {
+        return count;
+    }
+
     void rotate()
     {
-        if (currentNode)
-            currentNode = currentNode->next;
+        if (!tail || count == 0)
+            return;
+
+        currentNode = currentNode->next; // Move to the next node
+        if (currentNode == tail->next)   // If we reached the start, reset to the first node
+        {
+            currentNode = tail->next;
+        }
     }
 
     T *getCurrentNode() const

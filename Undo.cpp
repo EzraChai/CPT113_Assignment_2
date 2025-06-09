@@ -65,6 +65,12 @@ void Undo::popAction(DoublyLinkedList<StudentProfile> &studentList, CircularLink
             StudyGroup *sg = studyGroups.searchByCourseName(sp->getCourse());
             sg->deleteStudyGroupMember(sp);
             studentList.deleteNode(sp);
+            if (sg->getStudentCount() == 0)
+            {
+                std::cout << "Deleting study group: " << sg->getCourse() << std::endl;
+                studyGroups.removeNode(sg);
+                delete sg;
+            }
             undoStack.pop();
             std::cout << "Undoing last action: Create Profile" << std::endl;
 

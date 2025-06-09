@@ -49,7 +49,6 @@ class StudyGroup
 private:
     std::string course;
     LinkedList<StudentProfile> studyGroupMembers; // List of student profiles in the study group
-    // CircularLinkedList<StudentProfile> studyGroupStudents;
 
 public:
     StudyGroup(std::string course);
@@ -59,6 +58,7 @@ public:
     bool compare(const StudyGroup &other) const;
     void addStudyGroupMember(StudentProfile &);
     void deleteStudyGroupMember(StudentProfile *&);
+    int getStudentCount() const;
     void displayStudyGroup() const;
 };
 

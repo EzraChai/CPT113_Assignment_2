@@ -42,6 +42,7 @@ void StudentProfilesManagement::searchStudentProfileByName(std::string name)
 void StudentProfilesManagement::rotateStudyGroupMembers()
 {
     studyGroups.rotate();
+    std::cout << "StudyGroup count" << studyGroups.getCount() << std::endl;
 }
 
 void StudentProfilesManagement::displayStudyGroupMembers()
