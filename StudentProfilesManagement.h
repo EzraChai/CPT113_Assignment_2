@@ -12,6 +12,7 @@ class StudentProfilesManagement
 private:
     DoublyLinkedList<StudentProfile> studentList;
     Undo undo;
+    CircularLinkedList<StudyGroup> studyGroups; // Study group management
     // CircularLinkedList<StudyGroup> studyGroupList; // Circular linked list for study group members
     // TODO: Add a linked list for study groups
     // LinkedList<StudyGroup *> studyGroups; // List of study groups
@@ -22,7 +23,7 @@ public:
     void createStudentProfile(std::string studentId, std::string name, std::string course);
     void displayAllStudentProfiles();
     void searchStudentProfileByName(std::string name);
-    // void addFriend(std::string studentId, std::string friendId);
+    void addNewFriend(std::string friendName);
     void sendMessage(std::string recipientName, std::string message);
     void displayInboxMessages();
     void displaySentMessages();
@@ -31,6 +32,8 @@ public:
     void displayCurrentStudentProfile();
     void browseForward();
     void browseBackward();
+    void displayStudyGroupMembers();
+    void displayFriendList();
 };
 
 #endif

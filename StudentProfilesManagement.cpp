@@ -1,4 +1,5 @@
 #include "StudentProfilesManagement.h"
+#include "StudentProfile.h"
 #include "iomanip"
 
 StudentProfilesManagement::StudentProfilesManagement()
@@ -13,6 +14,14 @@ void StudentProfilesManagement::createStudentProfile(std::string studentId, std:
     StudentProfile *newProfile = new StudentProfile(studentId, name, course);
     studentList.insertNode(newProfile);
     undo.pushAction({ActionType::CREATE_PROFILE, newProfile});
+
+    StudyGroup *sg = studyGroups.searchByCourseName(course);
+    if (sg == nullptr)
+    {
+        sg = new StudyGroup(course);
+        studyGroups.addNode(sg);
+    }
+    sg->addStudyGroupMember(*newProfile);
 }
 
 void StudentProfilesManagement::searchStudentProfileByName(std::string name)
@@ -27,6 +36,28 @@ void StudentProfilesManagement::searchStudentProfileByName(std::string name)
     else
     {
         std::cout << "No student profile found with the name: " << name << std::endl;
+    }
+}
+
+void StudentProfilesManagement::displayStudyGroupMembers()
+{
+    if (studentList.getCurrentNode())
+    {
+        StudentProfile *currentProfile = studentList.getCurrentNode();
+        std::string course = currentProfile->getCourse();
+        StudyGroup *studyGroup = studyGroups.searchByCourseName(course);
+        if (studyGroup)
+        {
+            studyGroup->showStudyGroup();
+        }
+        else
+        {
+            std::cout << "No study group found for the course: " << course << std::endl;
+        }
+    }
+    else
+    {
+        std::cout << "No current student profile selected." << std::endl;
     }
 }
 
@@ -112,8 +143,49 @@ void StudentProfilesManagement::sendMessage(std::string recipientName, std::stri
     }
 }
 
+void StudentProfilesManagement::addNewFriend(std::string friendName)
+{
+    StudentProfile *friendProfile = studentList.searchByName(friendName);
+    if (friendProfile == nullptr)
+    {
+        std::cout << "Friend profile not found." << std::endl;
+        return;
+    }
+    if (friendProfile == studentList.getCurrentNode())
+    {
+        std::cout << "Cannot add yourself as a friend." << std::endl;
+        return;
+    }
+
+    if (friendProfile->isFriend(studentList.getCurrentNode()))
+    {
+        std::cout << "Already friends with " << friendProfile->getStudentName() << "." << std::endl;
+        return;
+    }
+
+    StudentProfile *currentProfile = studentList.getCurrentNode();
+    if (currentProfile != nullptr)
+    {
+        currentProfile->addFriend(friendProfile);
+        undo.pushAction({ActionType::ADD_FRIEND, currentProfile});
+        friendProfile->addFriend(currentProfile);
+        undo.pushAction({ActionType::ADD_FRIEND, friendProfile});
+        std::cout << "Added " << friendProfile->getStudentName() << " as a friend." << std::endl;
+    }
+}
+
+void StudentProfilesManagement::displayFriendList()
+{
+    StudentProfile *currentProfile = studentList.getCurrentNode();
+    if (currentProfile != nullptr)
+    {
+        std::cout << "\n--- Friend List for: " << currentProfile->getStudentName() << " ---\n";
+        currentProfile->displayFriendList();
+    }
+}
+
 void StudentProfilesManagement::undoLastAction()
 {
     // undo.displayAllAction();
-    undo.popAction(studentList);
+    undo.popAction(studentList, studyGroups);
 }

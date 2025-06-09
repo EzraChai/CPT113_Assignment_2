@@ -117,3 +117,46 @@
 // //                   << ", Course: " << course << std::endl;
 // //     }
 // // };
+
+#include "StudyGroup.h"
+#include <string>
+#include <iostream>
+#include "StudentProfile.h"
+
+StudyGroup::StudyGroup(std::string course)
+{
+    this->course = course;
+};
+
+StudyGroup::~StudyGroup()
+{
+}
+
+std::string StudyGroup::getCourse() const
+{
+    return course;
+}
+
+bool StudyGroup::compare(const StudyGroup &other) const
+{
+    return this->course > other.course;
+}
+
+void StudyGroup::addStudyGroupMember(StudentProfile &student)
+{
+    studyGroupMembers.insert(&student);
+    std::cout << "Added " << student.getStudentName() << " to study group.\n";
+}
+
+void StudyGroup::deleteStudyGroupMember(StudentProfile *&student)
+{
+    studyGroupMembers.remove(student);
+    std::cout << "Deleted " << student->getStudentName() << " from study group.\n";
+}
+
+void StudyGroup::showStudyGroup() const
+{
+    std::cout << "\n--- Study Group Members for: " << course << " ---\n";
+    studyGroupMembers.printList();
+    std::cout << "--------------------------------------------------\n";
+}

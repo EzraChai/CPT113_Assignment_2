@@ -2,6 +2,8 @@
 #include <string>
 #include "StudentProfile.h"
 #include "DoublyLinkedList.h"
+#include "CircularLinkedList.h"
+#include "StudyGroup.h"
 
 Undo::Undo()
 {
@@ -49,7 +51,7 @@ void Undo::pushAction(Action action)
     undoStack.push(action);
 }
 
-void Undo::popAction(DoublyLinkedList<StudentProfile> &studentList)
+void Undo::popAction(DoublyLinkedList<StudentProfile> &studentList, CircularLinkedList<StudyGroup> &studyGroups)
 {
     if (!undoStack.isEmpty())
     {
@@ -58,17 +60,28 @@ void Undo::popAction(DoublyLinkedList<StudentProfile> &studentList)
         case ActionType::CREATE_PROFILE:
         {
 
-            std::cout << "Undoing last action: Create Profile" << std::endl;
             StudentProfile *sp = undoStack.top()->StudentProfilePointer;
+            StudyGroup *sg = studyGroups.searchByCourseName(sp->getCourse());
+            sg->deleteStudyGroupMember(sp);
             studentList.deleteNode(sp);
+            undoStack.pop();
+            std::cout << "Undoing last action: Create Profile" << std::endl;
+
             break;
         }
         case ActionType::ADD_FRIEND:
-            break;
+        {
+            StudentProfile *sp = undoStack.top()->StudentProfilePointer;
+            undoStack.pop();
+            StudentProfile *sp2 = undoStack.top()->StudentProfilePointer;
+            sp->deleteFriend(sp2);
+            sp2->deleteFriend(sp);
+            undoStack.pop();
+            std::cout << "Undoing last action: Adding friend" << std::endl;
+        }
 
         case ActionType::SEND_MESSAGE:
         {
-            std::cout << "Undoing last action: Sending message" << std::endl;
             // Logic to undo sending a message
             StudentProfile *spInbox = undoStack.top()->StudentProfilePointer;
             spInbox->unsendInboxMessage();
@@ -77,6 +90,8 @@ void Undo::popAction(DoublyLinkedList<StudentProfile> &studentList)
             StudentProfile *spSent = undoStack.top()->StudentProfilePointer;
             spSent->unsendSentMessage();
             undoStack.pop();
+            std::cout << "Undoing last action: Sending message" << std::endl;
+
             break;
         }
 

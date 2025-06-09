@@ -8,7 +8,13 @@ template <class T>
 class CircularLinkedList
 {
 private:
-    T *tail;
+    struct Node
+    {
+        T *data;
+        Node *next;
+    };
+
+    Node *tail;
     int count;
 
 public:
@@ -22,8 +28,12 @@ public:
         }
     }
 
-    void addNode(T *newNode)
+    void addNode(T *newData)
     {
+        Node *newNode = new Node;
+        newNode->data = newData;
+        newNode->next = nullptr;
+
         if (!tail)
         {
             tail = newNode;
@@ -38,17 +48,17 @@ public:
         count++;
     }
 
-    void removeNode(T *nodeToRemove)
+    void removeNode(T *data)
     {
         if (!tail || count == 0)
             return;
 
-        T *current = tail->next;
-        T *prev = tail;
+        Node *current = tail->next;
+        Node *prev = tail;
 
         do
         {
-            if (current == nodeToRemove)
+            if (current->data == data)
             {
                 if (current == tail) // If it's the tail
                 {
@@ -77,20 +87,19 @@ public:
         } while (current != tail->next);
     }
 
-    void rotateAndPrintOnce() const
+    T *searchByCourseName(std::string courseName) const
     {
-        if (!tail)
-        {
-            std::cout << "No members in study group.\n";
-            return;
-        }
-
-        T *current = tail->next;
+        if (!tail || count == 0)
+            return nullptr;
+        Node *current = tail->next;
         do
         {
-            current->printProfile();
+            if (current->data->getCourse() == courseName)
+                return current->data;
             current = current->next;
         } while (current != tail->next);
+
+        return nullptr;
     }
 
     void removeFront()
@@ -98,7 +107,7 @@ public:
         if (!tail)
             return;
 
-        T *front = tail->next;
+        Node *front = tail->next;
 
         if (tail == front)
         {

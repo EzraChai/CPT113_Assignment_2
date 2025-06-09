@@ -1,9 +1,5 @@
 #include <iostream>
 #include "StudentProfilesManagement.h"
-// #include "StudentProfile.h"
-// #include "MessageQueue.h"
-// #include "DoublyLinkedList.h"
-// #include "MessageQueue.cpp"
 
 int main()
 {
@@ -29,6 +25,11 @@ int main()
     spf.browseForward();
     spf.displayCurrentStudentProfile();
     spf.displayInboxMessages();
+    spf.displayStudyGroupMembers();
+    spf.addNewFriend("Chloe");
+    spf.displayFriendList();
+    spf.undoLastAction();
+    spf.displayFriendList();
 
     // std::cout << "----- Student Profile Management System -----" << std::endl;
     // std::cout << "1. Create a new student profile" << std::endl;

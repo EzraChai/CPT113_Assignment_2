@@ -16,6 +16,18 @@ StudentProfile::StudentProfile(std::string studentId, std::string name, std::str
     this->messageSent = MessageQueue<Message>();
 }
 
+StudentProfile::~StudentProfile()
+{
+    // Clean up the linked list of friends
+    FriendNode *current = friendHead;
+    while (current)
+    {
+        FriendNode *temp = current;
+        current = current->nextFriend;
+        delete temp;
+    }
+}
+
 std::string StudentProfile::getStudentName() const
 {
     return name;
@@ -24,6 +36,11 @@ std::string StudentProfile::getStudentName() const
 std::string StudentProfile::getStudentId() const
 {
     return studentId;
+}
+
+std::string StudentProfile::getCourse() const
+{
+    return course;
 }
 
 void StudentProfile::printProfile() const
@@ -96,4 +113,86 @@ void StudentProfile::unsendInboxMessage()
         messageInbox.dequeue(); // Remove the message from the original queue
     }
     messageInbox.dequeue();
+}
+
+bool StudentProfile::compare(const StudentProfile &other) const
+{
+    return this->name > other.name; // Compare by name
+}
+
+void StudentProfile::displayFriendList()
+{
+    if (!friendHead)
+    {
+        std::cout << "No friends added yet." << std::endl;
+        return;
+    }
+    FriendNode *current = friendHead;
+    while (current)
+    {
+        std::cout << current->friendProfile->getStudentName() << std::endl;
+        current = current->nextFriend;
+    }
+}
+
+bool StudentProfile::isFriend(const StudentProfile *friendProfile) const
+{
+    FriendNode *current = friendHead;
+    while (current)
+    {
+        if (current->friendProfile == friendProfile)
+        {
+            return true;
+        }
+        current = current->nextFriend;
+    }
+    return false;
+}
+
+void StudentProfile::addFriend(StudentProfile *friendProfile)
+{
+    FriendNode *newFriendNode = new FriendNode;
+    newFriendNode->friendProfile = friendProfile;
+    newFriendNode->nextFriend = nullptr;
+
+    if (!friendHead)
+    {
+        friendHead = newFriendNode; // If no friends, set the new friend as head
+    }
+    else
+    {
+        FriendNode *current = friendHead;
+        while (current->nextFriend) // Traverse to the end of the list
+        {
+            current = current->nextFriend;
+        }
+        current->nextFriend = newFriendNode; // Add the new friend at the end
+    }
+}
+
+void StudentProfile::deleteFriend(StudentProfile *friendProfile)
+{
+    if (!friendHead)
+    {
+        std::cout << "No friends to delete." << std::endl;
+        return;
+    }
+    FriendNode *current = friendHead;
+    FriendNode *prev = nullptr;
+    while (current)
+    {
+        if (current->friendProfile == friendProfile)
+        {
+            if (prev)
+                prev->nextFriend = current->nextFriend;
+            else
+                friendHead = current->nextFriend;
+            return;
+        }
+        else
+        {
+            prev = current; // Move to the next friend
+            current = current->nextFriend;
+        }
+    }
 }

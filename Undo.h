@@ -3,6 +3,8 @@
 #include "Stack.h"
 #include "StudentProfile.h"
 #include "DoublyLinkedList.h"
+#include "CircularLinkedList.h"
+#include "StudyGroup.h"
 
 enum class ActionType
 {
@@ -26,7 +28,7 @@ public:
     ~Undo();
 
     void pushAction(Action);
-    void popAction(DoublyLinkedList<StudentProfile> &);
+    void popAction(DoublyLinkedList<StudentProfile> &, CircularLinkedList<StudyGroup> &);
     void displayAllAction();
 };
 
