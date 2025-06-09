@@ -91,15 +91,14 @@ void StudentProfilesManagement::displaySentMessages()
 
 void StudentProfilesManagement::displayAllStudentProfiles()
 {
-    std::cout << std::setw(20) << std::left << "Name" << std::setw(15) << "Student ID" << std::setw(20) << "Course" << std::endl;
     studentList.displayAllNodes();
-    std::cout << std::endl;
 }
 
 void StudentProfilesManagement::displayCurrentStudentProfile()
 {
     if (studentList.getCurrentNode())
     {
+        std::cout << "\n--- Current Student Profile ---\n";
         std::cout << std::setw(20) << std::left << "Name" << std::setw(15) << "Student ID" << std::setw(20) << "Course" << std::endl;
         studentList.getCurrentNode()->printProfile();
         std::cout << std::endl;
