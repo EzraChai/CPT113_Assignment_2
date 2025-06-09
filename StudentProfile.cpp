@@ -196,3 +196,16 @@ void StudentProfile::deleteFriend(StudentProfile *friendProfile)
         }
     }
 }
+
+void StudentProfile::deleteAllFriends()
+{
+    FriendNode *current = friendHead;
+    while (current)
+    {
+        FriendNode *temp = current;
+        temp->friendProfile->deleteFriend(this);
+        current = current->nextFriend;
+        delete temp; // Delete each friend node
+    }
+    friendHead = nullptr; // Reset the head to nullptr
+}

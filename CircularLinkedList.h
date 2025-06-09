@@ -16,9 +16,10 @@ private:
 
     Node *tail;
     int count;
+    Node *currentNode;
 
 public:
-    CircularLinkedList() : tail(nullptr), count(0) {}
+    CircularLinkedList() : tail(nullptr), count(0), currentNode(nullptr) {}
 
     ~CircularLinkedList()
     {
@@ -37,6 +38,7 @@ public:
         if (!tail)
         {
             tail = newNode;
+            currentNode = newNode;
             tail->next = tail; // Point to itself
         }
         else
@@ -48,38 +50,46 @@ public:
         count++;
     }
 
-    void removeNode(T *data)
+    void deleteNode(T *value)
     {
-        if (!tail || count == 0)
+        if (tail == nullptr)
+        {
+            std::cout << "List is empty. Cannot delete." << std::endl;
             return;
+        }
 
         Node *current = tail->next;
         Node *prev = tail;
 
         do
         {
-            if (current->data == data)
+            if (current->data == value)
             {
-                if (current == tail) // If it's the tail
+                if (currentNode == current)
                 {
-                    if (tail->next == tail) // Only one node in the list
-                    {
-                        delete tail;
-                        tail = nullptr;
-                    }
+                    // Move currentNode to next node unless list will be empty
+                    if (current == tail && current->next == tail)
+                        currentNode = nullptr;
                     else
-                    {
-                        prev->next = current->next; // Bypass the current node
-                        delete current;
-                        tail = prev; // Update tail to previous node
-                    }
+                        currentNode = current->next;
+                }
+                if (current == tail && current->next == tail)
+                {
+                    // Single node case
+                    delete current;
+                    tail = nullptr;
+                    currentNode = nullptr;
                 }
                 else
                 {
-                    prev->next = current->next; // Bypass the current node
+                    prev->next = current->next;
+                    if (current == tail)
+                    {
+                        tail = prev;
+                        // currentNode already updated above if needed
+                    }
                     delete current;
                 }
-                count--;
                 return;
             }
             prev = current;
@@ -90,7 +100,10 @@ public:
     T *searchByCourseName(std::string courseName) const
     {
         if (!tail || count == 0)
+        {
             return nullptr;
+        }
+
         Node *current = tail->next;
         do
         {
@@ -99,6 +112,22 @@ public:
             current = current->next;
         } while (current != tail->next);
 
+        return nullptr;
+    }
+
+    void rotate()
+    {
+        if (currentNode)
+            currentNode = currentNode->next;
+    }
+
+    T *getCurrentNode() const
+    {
+        if (currentNode)
+        {
+            // Optionally print debug info:
+            return currentNode->data;
+        }
         return nullptr;
     }
 

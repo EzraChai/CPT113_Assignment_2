@@ -61,6 +61,7 @@ void Undo::popAction(DoublyLinkedList<StudentProfile> &studentList, CircularLink
         {
 
             StudentProfile *sp = undoStack.top()->StudentProfilePointer;
+            sp->deleteAllFriends();
             StudyGroup *sg = studyGroups.searchByCourseName(sp->getCourse());
             sg->deleteStudyGroupMember(sp);
             studentList.deleteNode(sp);

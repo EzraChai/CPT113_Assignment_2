@@ -59,7 +59,7 @@ public:
     bool compare(const StudyGroup &other) const;
     void addStudyGroupMember(StudentProfile &);
     void deleteStudyGroupMember(StudentProfile *&);
-    void showStudyGroup() const;
+    void displayStudyGroup() const;
 };
 
 #endif

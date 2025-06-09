@@ -39,20 +39,19 @@ void StudentProfilesManagement::searchStudentProfileByName(std::string name)
     }
 }
 
+void StudentProfilesManagement::rotateStudyGroupMembers()
+{
+    studyGroups.rotate();
+}
+
 void StudentProfilesManagement::displayStudyGroupMembers()
 {
     if (studentList.getCurrentNode())
     {
-        StudentProfile *currentProfile = studentList.getCurrentNode();
-        std::string course = currentProfile->getCourse();
-        StudyGroup *studyGroup = studyGroups.searchByCourseName(course);
+        StudyGroup *studyGroup = studyGroups.getCurrentNode();
         if (studyGroup)
         {
-            studyGroup->showStudyGroup();
-        }
-        else
-        {
-            std::cout << "No study group found for the course: " << course << std::endl;
+            studyGroup->displayStudyGroup();
         }
     }
     else

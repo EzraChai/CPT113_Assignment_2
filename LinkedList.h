@@ -15,9 +15,11 @@ private:
 
 public:
     LinkedList();
+    ~LinkedList();
     void insert(T *data);
     void printList() const;
     void remove(T *data);
+    int size() const;
 };
 
 template <class T>
@@ -25,6 +27,27 @@ LinkedList<T>::LinkedList()
 {
     head = nullptr;
     count = 0;
+}
+
+template <class T>
+LinkedList<T>::~LinkedList()
+{
+    if (head)
+    {
+        Node *currentPtr = head;
+        while (currentPtr)
+        {
+            Node *tempPtr = currentPtr;
+            currentPtr = currentPtr->next;
+            delete tempPtr;
+        }
+    }
+}
+
+template <class T>
+int LinkedList<T>::size() const
+{
+    return count;
 }
 
 template <class T>
@@ -76,6 +99,10 @@ void LinkedList<T>::printList() const
 template <class T>
 void LinkedList<T>::remove(T *data)
 {
+    if (!head)
+    {
+        return;
+    }
     Node *currentPtr = head;
     Node *prevPtr = nullptr;
 

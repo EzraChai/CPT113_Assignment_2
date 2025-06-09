@@ -9,6 +9,8 @@ int main()
     spf.createStudentProfile("24863293", "Ezra", "Computer Science");
     spf.createStudentProfile("24863293", "John", "Computer Science");
     spf.createStudentProfile("24863293", "Zedd", "Computer Science");
+    spf.createStudentProfile("24863293", "Moses", "Mathematics");
+    spf.createStudentProfile("24863293", "Jenny", "Mathematics");
     spf.displayAllStudentProfiles();
     spf.sendMessage("Ezra", "Hello, Ezra!");
     spf.sendMessage("Ezra", "Hello, Ezra 2!");
@@ -30,6 +32,29 @@ int main()
     spf.displayFriendList();
     spf.undoLastAction();
     spf.displayFriendList();
+    spf.displayStudyGroupMembers();
+    spf.rotateStudyGroupMembers();
+    spf.displayStudyGroupMembers();
+    spf.createStudentProfile("24863293", "Winny", "Management");
+    spf.rotateStudyGroupMembers();
+    spf.displayStudyGroupMembers();
+
+    spf.undoLastAction();
+    spf.rotateStudyGroupMembers();
+    spf.displayStudyGroupMembers();
+    spf.rotateStudyGroupMembers();
+    spf.displayStudyGroupMembers();
+    spf.rotateStudyGroupMembers();
+    spf.displayStudyGroupMembers();
+
+    spf.undoLastAction();
+    spf.undoLastAction();
+    spf.undoLastAction();
+    spf.undoLastAction();
+    spf.undoLastAction();
+    spf.displayCurrentStudentProfile();
+    spf.displayAllStudentProfiles();
+    // spf.rotateStudyGroupMembers();
 
     // std::cout << "----- Student Profile Management System -----" << std::endl;
     // std::cout << "1. Create a new student profile" << std::endl;

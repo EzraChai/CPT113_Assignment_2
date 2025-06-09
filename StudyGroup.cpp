@@ -130,6 +130,9 @@ StudyGroup::StudyGroup(std::string course)
 
 StudyGroup::~StudyGroup()
 {
+    // Destructor does not need to do anything special for LinkedList
+    // since it will automatically clean up the nodes.
+    std::cout << "StudyGroup for course " << course << " destroyed.\n";
 }
 
 std::string StudyGroup::getCourse() const
@@ -152,11 +155,15 @@ void StudyGroup::deleteStudyGroupMember(StudentProfile *&student)
 {
     studyGroupMembers.remove(student);
     std::cout << "Deleted " << student->getStudentName() << " from study group.\n";
+    if (studyGroupMembers.size() == 0)
+    {
+        delete this;
+    }
 }
 
-void StudyGroup::showStudyGroup() const
+void StudyGroup::displayStudyGroup() const
 {
-    std::cout << "\n--- Study Group Members for: " << course << " ---\n";
+    std::cout << "\n--- Study Group Members for: " << this->getCourse() << " ---\n";
     studyGroupMembers.printList();
     std::cout << "--------------------------------------------------\n";
 }
