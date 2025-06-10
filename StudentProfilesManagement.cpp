@@ -30,23 +30,24 @@ void StudentProfilesManagement::createStudentProfile(std::string studentId, std:
 
 void StudentProfilesManagement::searchStudentProfileByName(std::string name)
 {
-    StudentProfile *profile = studentList.searchByName(name);
-    if (profile)
-    {
-        std::cout << std::setw(20) << std::left << "Name" << std::setw(15) << "Student ID" << std::setw(20) << "Course" << std::endl;
-        profile->printProfile();
-        std::cout << std::endl;
-    }
-    else
-    {
-        std::cout << "No student profile found with the name: " << name << std::endl;
+    try{
+        StudentProfile *profile = studentList.searchByName(name);
+        if (profile)
+        {
+            std::cout << std::setw(20) << std::left << "Name" << std::setw(15) << "Student ID" << std::setw(20) << "Course" << std::endl;
+            profile->printProfile();
+            std::cout << std::endl;
+        }
+    }catch(const char* e){    
+        std::cout << e << std::endl;
+        return;
     }
 }
 
 void StudentProfilesManagement::rotateStudyGroupMembers()
 {
     studyGroups.rotate();
-    std::cout << "StudyGroup count" << studyGroups.getCount() << std::endl;
+    // std::cout << "StudyGroup count" << studyGroups.getCount() << std::endl;
 }
 
 void StudentProfilesManagement::displayStudyGroupMembers()
@@ -139,57 +140,48 @@ void StudentProfilesManagement::browseBackward()
 
 void StudentProfilesManagement::sendMessage(std::string recipientName, std::string message)
 {
-    if (studentList.getCurrentNode())
-    {
+        if (!studentList.getCurrentNode())
+        {
+            throw "No current student profile selected.";
+        }
+        
         StudentProfile *recipientProfile = studentList.searchByName(recipientName);
         StudentProfile *currentProfile = studentList.getCurrentNode();
-        if (currentProfile != nullptr && recipientProfile != nullptr)
+        
+        if (recipientProfile == nullptr)
         {
-            currentProfile->sendToSentMessage(message, recipientName);
-            undo.pushAction({ActionType::SEND_MESSAGE, currentProfile});
-
-            recipientProfile->sendToInboxMessage(message, currentProfile->getStudentName());
-            undo.pushAction({ActionType::SEND_MESSAGE, recipientProfile});
+            throw "Recipient profile not found.";
         }
-        else
+        if (recipientProfile->getStudentName() == currentProfile->getStudentName())
         {
-            std::cout << "No current student profile selected." << std::endl;
+            throw "Cannot send a message to yourself.";
         }
-    }
-    else
-    {
-        std::cout << "No student profiles available." << std::endl;
-    }
+        if (message.empty())
+        {
+            throw "Message cannot be empty.";
+        }
+        currentProfile->sendToSentMessage(message, recipientName);
+        undo.pushAction({ActionType::SEND_MESSAGE, currentProfile});
+        recipientProfile->sendToInboxMessage(message, currentProfile->getStudentName());
+        undo.pushAction({ActionType::SEND_MESSAGE, recipientProfile});
+   
 }
 
 void StudentProfilesManagement::addNewFriend(std::string friendName)
 {
     StudentProfile *friendProfile = studentList.searchByName(friendName);
-    if (friendProfile == nullptr)
-    {
-        std::cout << "Friend profile not found." << std::endl;
-        return;
-    }
-    if (friendProfile == studentList.getCurrentNode())
-    {
-        std::cout << "Cannot add yourself as a friend." << std::endl;
-        return;
-    }
-
-    if (friendProfile->isFriend(studentList.getCurrentNode()))
-    {
-        std::cout << "Already friends with " << friendProfile->getStudentName() << "." << std::endl;
-        return;
-    }
-
-    StudentProfile *currentProfile = studentList.getCurrentNode();
-    if (currentProfile != nullptr)
-    {
-        currentProfile->addFriend(friendProfile);
-        undo.pushAction({ActionType::ADD_FRIEND, currentProfile});
-        friendProfile->addFriend(currentProfile);
-        undo.pushAction({ActionType::ADD_FRIEND, friendProfile});
-        std::cout << "Added " << friendProfile->getStudentName() << " as a friend." << std::endl;
+    try{
+        StudentProfile *currentProfile = studentList.getCurrentNode();
+        if (currentProfile != nullptr)
+        {
+            currentProfile->addFriend(friendProfile);
+            undo.pushAction({ActionType::ADD_FRIEND, currentProfile});
+            friendProfile->addFriend(currentProfile);
+            undo.pushAction({ActionType::ADD_FRIEND, friendProfile});
+            std::cout << "Added " << friendProfile->getStudentName() << " as a friend." << std::endl;
+        }
+    }catch(const char* e){
+        std::cout << e << std::endl;
     }
 }
 
@@ -212,14 +204,12 @@ void StudentProfilesManagement::displayFriendList()
 
 void StudentProfilesManagement::undoLastAction()
 {
-    // undo.displayAllAction();
     try
     {
         undo.popAction(studentList, studyGroups);
     }
     catch (const char *e)
     {
-        std::cout << e << std::endl;
-        return;
+        std::cout << "Undo failed: " << e << std::endl;
     }
 }

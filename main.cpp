@@ -5,7 +5,7 @@
 int main()
 {
     StudentProfilesManagement spf;
-    std::cout << "----- Student Profile Management System -----" << std::endl;
+    std::cout << "----- Student Profile Management System -----\n" << std::endl;
     spf.createStudentProfile("24863293", "Chloe", "Computer Science");
     spf.createStudentProfile("24863293", "Ezra", "Computer Science");
     spf.createStudentProfile("24863293", "John", "Computer Science");
@@ -14,163 +14,172 @@ int main()
     spf.createStudentProfile("24863293", "Jenny", "Mathematics");
     spf.createStudentProfile("24863293", "Winny", "Management");
 
-    spf.displayAllStudentProfiles();
-    spf.sendMessage("Ezra", "Hello, Ezra!");
-    spf.sendMessage("Ezra", "Hello, Ezra 2!");
-    spf.sendMessage("Ezra", "Hello, Ezra 3!");
-    spf.displaySentMessages();
-    spf.undoLastAction();
-    spf.displaySentMessages();
-    spf.createStudentProfile("24863293", "Fred", "Computer Science");
-    spf.displayAllStudentProfiles();
+    std::string userSelection;
+    int choice;
 
-    spf.undoLastAction();
-    spf.displayAllStudentProfiles();
-    spf.searchStudentProfileByName("Chloe");
-    spf.browseForward();
-    spf.displayCurrentStudentProfile();
-    spf.displayInboxMessages();
-    spf.displayStudyGroupMembers();
-    spf.addNewFriend("Chloe");
-    spf.displayFriendList();
-    spf.undoLastAction();
-    spf.displayFriendList();
-    spf.displayStudyGroupMembers();
-    spf.rotateStudyGroupMembers();
-    spf.displayStudyGroupMembers();
-    spf.rotateStudyGroupMembers();
-    spf.displayStudyGroupMembers();
+    do{
 
-    spf.undoLastAction();
-    spf.rotateStudyGroupMembers();
-    spf.displayStudyGroupMembers();
-    spf.rotateStudyGroupMembers();
-    spf.displayStudyGroupMembers();
-    spf.rotateStudyGroupMembers();
-    spf.displayStudyGroupMembers();
+        std::cout << "\n----- Student Profile Management System -----" << std::endl;
+        std::cout << "1. Create a new student profile" << std::endl;
+        std::cout << "2. View all student profiles" << std::endl;
+        std::cout << "3. View current student profile" << std::endl;
+        std::cout << "4. Search student profile by name" << std::endl;
+        std::cout << "5. Add friend" << std::endl;
+        std::cout << "6. View friend list" << std::endl;
+        std::cout << "7. Send a message to another student" << std::endl;
+        std::cout << "8. View message inbox" << std::endl;
+        std::cout << "9. View message sent" << std::endl;
+        std::cout << "10. Undo last action" << std::endl;
+        std::cout << "11. View or rotate through study group members" << std::endl;
+        std::cout << "12. Browse Next Student" << std::endl;
+        std::cout << "13. Browse Previous Student" << std::endl;
+        std::cout << "14. Exit the application" << std::endl;
+        std::cout << "\nPlease select an option (1-14): ";
+        std::cin >> userSelection;
+        std::cin.ignore();
 
-    spf.undoLastAction();
-    spf.undoLastAction();
-    spf.undoLastAction();
-    spf.undoLastAction();
-    spf.undoLastAction();
-    spf.displayCurrentStudentProfile();
-    spf.displayAllStudentProfiles();
-    spf.rotateStudyGroupMembers();
 
-    // int choice = 0;
-    // while (choice != 8)
-    // {
-    //     std::cout << "----- Student Profile Management System -----" << std::endl;
-    //     std::cout << "1. Create a new student profile" << std::endl;
-    //     std::cout << "2. View all student profiles" << std::endl;
-    //     std::cout << "3. Add a friend" << std::endl;
-    //     std::cout << "4. Send a message to another student" << std::endl;
-    //     std::cout << "5. View message inbox" << std::endl;
-    //     std::cout << "6. Undo last action" << std::endl;
-    //     std::cout << "7. View or rotate through study group members" << std::endl;
-    //     std::cout << "8. Exit the application" << std::endl;
-    //     std::cout << "Please select an option (1-8): ";
-    //     int choice;
+        try{
+            choice = std::stoi(userSelection);
 
-    //     std::cin >> choice;
-    //     switch (choice)
-    //     {
-    //     case 1:
-    //     {
+        }catch(const char *e){
+            std::cout << "\nInvalid input. Please enter a number between 1 and 14." << std::endl;
+            continue; // Skip to the next iteration of the loop
+        }
 
-    //         std::cout << "Creating a new student profile..." << std::endl;
-    //         std::cout << "Enter Student ID: ";
-    //         std::string studentId;
-    //         std::cin >> studentId;
-    //         std::cout << "Enter Student Name: ";
-    //         std::string studentName;
-    //         std::cin.ignore(); // Clear the newline character from the input buffer
-    //         std::getline(std::cin, studentName);
-    //         std::cout << "Enter Course: ";
-    //         std::string course;
-    //         std::getline(std::cin, course);
-    //         spf.createStudentProfile(studentId, studentName, course);
-    //         std::cout << "Student profile created successfully!" << std::endl;
-    //         break;
-    //     }
+        switch (choice)
+        {
+            case 1:{
+                std::string studentID,name,course;
+                std::cout << "\nCreating Student Profile...\n" << std::endl;
+                std::cout << "StudentID: ";
+                std::getline(std::cin,studentID);
+                std::cout << "Name: ";
+                std::getline(std::cin,name);
+                std::cout << "Course: ";
+                std::getline(std::cin,course);
+                spf.createStudentProfile(studentID,name,course);
+                std::cout << "\nStudent Profile Created..." << std::endl;
+                break;
+            }
 
-    //     case 2:
-    //     {
+            case 2:{
+                std::cout << "\n-------All Student Profiles ------\n";
+                std::cout << std::setw(20) << std::left << "Name" << std::setw(15) << "Student ID" << std::setw(20) << "Course" << std::endl;
+                spf.displayAllStudentProfiles();
+                std::cout << "---------------------------------\n";
+                break;
+            }
 
-    //         std::cout << "Viewing all student profiles..." << std::endl;
-    //         // Logic to view all student profiles
-    //         std::cout << "\n--- All Student Profiles ---\n";
-    //         std::cout << std::setw(20) << std::left << "Name" << std::setw(15) << "Student ID" << std::setw(20) << "Course" << std::endl;
-    //         spf.displayAllStudentProfiles();
-    //         std::cout << "-----------------------------\n";
-    //         break;
-    //     }
+            case 3:{
+                spf.displayCurrentStudentProfile();
+                break;
+            }
 
-    //     case 3:
-    //     {
-    //         std::cout << "Adding a friend..." << std::endl;
-    //         // Logic to add a friend
-    //         std::cout << "Enter friend's name: ";
-    //         std::string friendName;
-    //         std::cin.ignore(); // Clear the newline character from the input buffer
-    //         std::getline(std::cin, friendName);
-    //         spf.addNewFriend(friendName);
-    //         std::cout << "Friend added successfully!" << std::endl;
-    //         break;
-    //     }
-    //     case 4:
-    //     {
-    //         std::cout << "Sending a message to another student..." << std::endl;
-    //         // Logic to send a message
-    //         std::cout << "Enter recipient's name: ";
-    //         std::string recipientName;
-    //         std::cin.ignore(); // Clear the newline character from the input buffer
-    //         std::getline(std::cin, recipientName);
-    //         std::cout << "Enter message: ";
-    //         std::string message;
-    //         std::getline(std::cin, message);
-    //         spf.sendMessage(recipientName, message);
-    //         std::cout << "Message sent successfully!" << std::endl;
-    //         break;
-    //     }
-    //     case 5:
-    //     {
-    //         std::cout << "Viewing message inbox..." << std::endl;
-    //         // Logic to view message inbox
-    //         spf.displayInboxMessages();
-    //         spf.displaySentMessages();
-    //         break;
-    //     }
-    //     case 6:
-    //     {
-    //         std::cout << "Undoing last action..." << std::endl;
-    //         // Logic to undo last action
-    //         spf.undoLastAction();
-    //         std::cout << "Last action undone successfully!" << std::endl;
-    //         break;
-    //     }
-    //     case 7:
-    //     {
-    //         std::cout << "Viewing or rotating through study group members..." << std::endl;
-    //         // Logic to view or rotate through study group members
-    //         std::cout << "Current Study Group Members:\n";
-    //         std::cout << std::setw(20) << std::left << "Name" << std::setw(15) << "Student ID" << std::setw(20) << "Course" << std::endl;
-    //         spf.displayStudyGroupMembers();
+            case 4:{
+                std::string name;
+                std::cout << "\nSearching Profile by Name..." << std::endl;
+                std::cout << "Name: ";
+                std::cin.ignore();
+                std::getline(std::cin,name);
+                std::cout << std::endl;
+                spf.searchStudentProfileByName(name);
+                break;
+            }
 
-    //         break;
-    //     }
-    //     case 8:
-    //     {
-    //         std::cout << "Exiting the application. Goodbye!" << std::endl;
-    //         return 0; // Exit the application
-    //     }
-    //     default:
-    //     {
-    //         std::cout << "Invalid choice. Please select a valid option (1-8): ";
-    //         std::cin >> choice;
-    //     }
-    //     }
-    // }
+            case 5:{
+                std::string friendName;
+                std::cout << "\nAdding Friend...\n" << std::endl;
+                std::cout << "Friend Name: ";
+                std::cin.ignore();
+                std::getline(std::cin,friendName);
+                spf.addNewFriend(friendName);
+                // std::cout << "\nFriend added...\n" << std::endl; 
+                break;
+            }
+
+            case 6:{
+                std::cout << "\nViewing friend list..." << std::endl;
+                spf.displayFriendList();
+                break;
+            }
+
+            case 7:{
+                bool sent = false;
+                while(!sent){
+                    try {
+                        std::string otherName,message;
+                        std::cout << "\nSending message to other student..." << std::endl;
+                        std::cout << "Enter recipient's name: ";
+                        std::getline(std::cin, otherName);
+                        std::cout << "Enter message: ";
+                        std::getline(std::cin, message);
+                        spf.sendMessage(otherName, message);
+                        sent = true;
+                    }catch (const char *e) {
+                        sent = false;
+                        std::cout << "\nMessage not sent..." << std::endl;
+                        std::cout << "\nError: " << e << std::endl;
+                    }
+                }
+
+                std::cout << "\nMessage sent successfully..." << std::endl;
+                break;
+            }
+
+            case 8:{
+                spf.displayInboxMessages();
+                break;
+            }
+
+            case 9:{
+                spf.displaySentMessages();
+                break;
+            }
+
+            case 10:{
+                std::cout << std::endl;
+                spf.undoLastAction();
+                break;
+            }
+
+            case 11:{
+                char selection = 'Y';
+                std::cout << "\nViewing or rotating through study group members..." << std::endl;
+                spf.displayStudyGroupMembers();
+                do{
+                    std::cout << "Rotate Next Group(Y/N): ";
+                    std::cin >> selection;
+                    if(selection=='Y'){
+                        std::cout << "\nRotating..." << std::endl;
+                        spf.rotateStudyGroupMembers();
+                        spf.displayStudyGroupMembers();
+                    }
+                }while(selection!='N');
+                break;
+            }
+
+            case 12:{
+                std::cout << "\nBrowsing Forward..." << std::endl;
+                spf.browseForward();
+                break;
+            }
+
+            case 13:{
+                std::cout << "\nBrowsing Backward..." << std::endl;
+                spf.browseBackward();
+                break;
+            }
+            case 14:{
+                std::cout << "\nExiting the application...";
+                return 0;
+            }
+            default:
+                std::cout << "\nInvalid selection." << std::endl;
+                break;
+            }
+
+    }while(choice!=14);
+    
     return 0;
 }
