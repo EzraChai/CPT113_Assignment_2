@@ -53,58 +53,61 @@ void Undo::pushAction(Action action)
 
 void Undo::popAction(DoublyLinkedList<StudentProfile> &studentList, CircularLinkedList<StudyGroup> &studyGroups)
 {
-    if (!undoStack.isEmpty())
+    if (undoStack.isEmpty())
     {
-        switch (undoStack.top()->actionType)
+        throw "No actions to undo.\n";
+        return;
+    }
+
+    switch (undoStack.top()->actionType)
+    {
+    case ActionType::CREATE_PROFILE:
+    {
+
+        StudentProfile *sp = undoStack.top()->StudentProfilePointer;
+        sp->deleteAllFriends();
+        StudyGroup *sg = studyGroups.searchByCourseName(sp->getCourse());
+        sg->deleteStudyGroupMember(sp);
+        studentList.deleteNode(sp);
+        if (sg->getStudentCount() == 0)
         {
-        case ActionType::CREATE_PROFILE:
-        {
-
-            StudentProfile *sp = undoStack.top()->StudentProfilePointer;
-            sp->deleteAllFriends();
-            StudyGroup *sg = studyGroups.searchByCourseName(sp->getCourse());
-            sg->deleteStudyGroupMember(sp);
-            studentList.deleteNode(sp);
-            if (sg->getStudentCount() == 0)
-            {
-                std::cout << "Deleting study group: " << sg->getCourse() << std::endl;
-                studyGroups.removeNode(sg);
-                delete sg;
-            }
-            undoStack.pop();
-            std::cout << "Undoing last action: Create Profile" << std::endl;
-
-            break;
+            std::cout << "Deleting study group: " << sg->getCourse() << std::endl;
+            studyGroups.removeNode(sg);
+            delete sg;
         }
-        case ActionType::ADD_FRIEND:
-        {
-            StudentProfile *sp = undoStack.top()->StudentProfilePointer;
-            undoStack.pop();
-            StudentProfile *sp2 = undoStack.top()->StudentProfilePointer;
-            sp->deleteFriend(sp2);
-            sp2->deleteFriend(sp);
-            undoStack.pop();
-            std::cout << "Undoing last action: Adding friend" << std::endl;
-            break;
-        }
+        undoStack.pop();
+        std::cout << "Undoing last action: Create Profile" << std::endl;
 
-        case ActionType::SEND_MESSAGE:
-        {
-            // Logic to undo sending a message
-            StudentProfile *spInbox = undoStack.top()->StudentProfilePointer;
-            spInbox->unsendInboxMessage();
-            undoStack.pop();
+        break;
+    }
+    case ActionType::ADD_FRIEND:
+    {
+        StudentProfile *sp = undoStack.top()->StudentProfilePointer;
+        undoStack.pop();
+        StudentProfile *sp2 = undoStack.top()->StudentProfilePointer;
+        sp->deleteFriend(sp2);
+        sp2->deleteFriend(sp);
+        undoStack.pop();
+        std::cout << "Undoing last action: Adding friend" << std::endl;
+        break;
+    }
 
-            StudentProfile *spSent = undoStack.top()->StudentProfilePointer;
-            spSent->unsendSentMessage();
-            undoStack.pop();
-            std::cout << "Undoing last action: Sending message" << std::endl;
+    case ActionType::SEND_MESSAGE:
+    {
+        // Logic to undo sending a message
+        StudentProfile *spInbox = undoStack.top()->StudentProfilePointer;
+        spInbox->unsendInboxMessage();
+        undoStack.pop();
 
-            break;
-        }
+        StudentProfile *spSent = undoStack.top()->StudentProfilePointer;
+        spSent->unsendSentMessage();
+        undoStack.pop();
+        std::cout << "Undoing last action: Sending message" << std::endl;
 
-        default:
-            break;
-        }
+        break;
+    }
+
+    default:
+        break;
     }
 }

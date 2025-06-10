@@ -213,5 +213,13 @@ void StudentProfilesManagement::displayFriendList()
 void StudentProfilesManagement::undoLastAction()
 {
     // undo.displayAllAction();
-    undo.popAction(studentList, studyGroups);
+    try
+    {
+        undo.popAction(studentList, studyGroups);
+    }
+    catch (const char *e)
+    {
+        std::cout << e << std::endl;
+        return;
+    }
 }
