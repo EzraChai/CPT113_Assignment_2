@@ -11,7 +11,7 @@ int main()
     spf.createStudentProfile("24863293", "Zedd", "Intelligent Computing");
     spf.createStudentProfile("24863293", "Moses", "Computer Infrastructure");
     spf.createStudentProfile("24863293", "Jenny", "Computer Infrastructure");
-    spf.creasteStudentProfile("24863293", "Winny", "Intelligent Computing");
+    spf.createStudentProfile("24863293", "Winny", "Intelligent Computing");
 
     std::string userSelection;
     int choice;
