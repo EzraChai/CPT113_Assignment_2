@@ -151,6 +151,16 @@ bool StudentProfile::isFriend(const StudentProfile *friendProfile) const
 
 void StudentProfile::addFriend(StudentProfile *friendProfile)
 {
+    if (isFriend(friendProfile))
+    {
+        throw "This student is already your friend.\n";
+        return;
+    }
+    if(this == friendProfile)
+    {
+        throw "You cannot add yourself as a friend.\n";
+        return;
+    }
     FriendNode *newFriendNode = new FriendNode;
     newFriendNode->friendProfile = friendProfile;
     newFriendNode->nextFriend = nullptr;
