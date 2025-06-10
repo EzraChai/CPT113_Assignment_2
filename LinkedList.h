@@ -88,6 +88,12 @@ void LinkedList<T>::insert(T *data)
 template <class T>
 void LinkedList<T>::printList() const
 {
+    if (!head)
+    {
+        throw "List is empty.\n";
+        return;
+    }
+
     Node *currentPtr = head;
     while (currentPtr)
     {
@@ -101,6 +107,7 @@ void LinkedList<T>::remove(T *data)
 {
     if (!head)
     {
+        throw "List is empty. Cannot remove data.\n";
         return;
     }
     Node *currentPtr = head;
@@ -125,6 +132,7 @@ void LinkedList<T>::remove(T *data)
         prevPtr = currentPtr;
         currentPtr = currentPtr->next;
     }
+    throw "Data not found in the list.\n";
 }
 
 #endif

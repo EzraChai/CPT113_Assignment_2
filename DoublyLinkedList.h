@@ -80,10 +80,12 @@ public:
 
     void browseForward()
     {
+
         if (current != nullptr)
         {
             current = current->next; // Move to the next node
         }
+        throw "Current node is not set.\n"; // Throw an error if current is nullptr
     }
 
     void browseBackward()
@@ -92,13 +94,15 @@ public:
         {
             current = current->prev; // Move to the previous node
         }
+        throw "Current node is not set.\n"; // Throw an error if current is nullptr
     }
 
     T *getCurrentNode() const
     {
         if (current == nullptr)
         {
-            return nullptr; // Return nullptr if current is not set
+            throw "Current node is not set.\n"; // Throw an error if current is nullptr
+            return nullptr;                     // Return nullptr if current is not set
         }
         return current->data; // Return the current node
     }
@@ -114,11 +118,22 @@ public:
             }
             nodePtr = nodePtr->next; // Move to the next node
         }
-        return nullptr; // Return nullptr if not found
+        throw "Student profile not found.\n"; // Throw an error if not found
+        return nullptr;                       // Return nullptr if not found
     }
 
     void deleteNode(T *&node)
     {
+        if (head == nullptr) // If the list is empty
+        {
+            throw "List is empty. Cannot delete node.\n";
+            return;
+        }
+        if (node == nullptr) // If the node to delete is nullptr
+        {
+            throw "Node to delete is nullptr.\n";
+            return;
+        }
         Node *nodePtr = head;
         while (nodePtr != nullptr)
         {
@@ -146,11 +161,17 @@ public:
             }
             nodePtr = nodePtr->next; // Move to the next node
         }
+        throw "Node not found in the list.\n"; // Throw an error if not found
     }
 
     void displayAllNodes()
     {
         Node *nodePtr = head;
+        if (nodePtr == nullptr)
+        {
+            throw "List is empty. Cannot display nodes.\n"; // Throw an error if the list is empty
+            return;
+        }
         while (nodePtr != nullptr)
         {
             nodePtr->data->printProfile(); // Assuming T has a printProfile method

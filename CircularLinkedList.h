@@ -53,7 +53,8 @@ public:
     void removeNode(T *data)
     {
         if (!tail || count == 0)
-            return;
+            throw "List is empty. Cannot remove data.\n";
+        return;
 
         Node *current = tail->next;
         Node *prev = tail;
@@ -90,12 +91,14 @@ public:
             prev = current;
             current = current->next;
         } while (current != tail->next);
+        throw "Data not found in the list.\n";
     }
 
     T *searchByCourseName(std::string courseName) const
     {
         if (!tail || count == 0)
         {
+            throw "List is empty. Cannot search for course name.\n";
             return nullptr;
         }
 
@@ -107,6 +110,7 @@ public:
             current = current->next;
         } while (current != tail->next);
 
+        throw "Course name not found in the list.\n";
         return nullptr;
     }
 
@@ -118,7 +122,10 @@ public:
     void rotate()
     {
         if (!tail || count == 0)
+        {
+            throw "List is empty. Cannot rotate.\n";
             return;
+        }
 
         currentNode = currentNode->next; // Move to the next node
         if (currentNode == tail->next)   // If we reached the start, reset to the first node
@@ -134,13 +141,17 @@ public:
             // Optionally print debug info:
             return currentNode->data;
         }
+        throw "Current node is not set.\n";
         return nullptr;
     }
 
     void removeFront()
     {
         if (!tail)
+        {
+            throw "List is empty. Cannot remove front.\n";
             return;
+        }
 
         Node *front = tail->next;
 

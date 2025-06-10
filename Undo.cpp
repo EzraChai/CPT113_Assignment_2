@@ -16,7 +16,7 @@ void Undo::displayAllAction()
 {
     if (undoStack.isEmpty())
     {
-        std::cout << "No actions to undo." << std::endl;
+        throw "No actions to undo.\n";
         return;
     }
 
