@@ -81,20 +81,38 @@ public:
     void browseForward()
     {
 
-        if (current != nullptr)
+        if (current == nullptr) // If current is not set
         {
-            current = current->next; // Move to the next node
+            throw "Current node is not set.\n"; // Throw an error if current is nullptr
+            return;
         }
-        throw "Current node is not set.\n"; // Throw an error if current is nullptr
+
+        if (current->next == nullptr) // If current is the last node
+        {
+            throw "Already at the end of the list.\n"; // Throw an error if already at the end
+            return;
+        }
+
+        current = current->next; // Move to the next node
+        return;
     }
 
     void browseBackward()
     {
-        if (current != nullptr)
+        if (current == nullptr) // If current is not set
         {
-            current = current->prev; // Move to the previous node
+            throw "Current node is not set.\n"; // Throw an error if current is nullptr
+            return;
         }
-        throw "Current node is not set.\n"; // Throw an error if current is nullptr
+
+        if (current->prev == nullptr) // If current is the last node
+        {
+            throw "Already at the end of the list.\n"; // Throw an error if already at the end
+            return;
+        }
+
+        current = current->prev; // Move to the next node
+        return;
     }
 
     T *getCurrentNode() const

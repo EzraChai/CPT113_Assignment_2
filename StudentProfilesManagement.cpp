@@ -15,8 +15,12 @@ void StudentProfilesManagement::createStudentProfile(std::string studentId, std:
     studentList.insertNode(newProfile);
     undo.pushAction({ActionType::CREATE_PROFILE, newProfile});
 
-    StudyGroup *sg = studyGroups.searchByCourseName(course);
-    if (sg == nullptr)
+    StudyGroup *sg = nullptr;
+    try
+    {
+        sg = studyGroups.searchByCourseName(course);
+    }
+    catch (const char *e)
     {
         sg = new StudyGroup(course);
         studyGroups.addNode(sg);
@@ -110,11 +114,27 @@ void StudentProfilesManagement::displayCurrentStudentProfile()
 }
 void StudentProfilesManagement::browseForward()
 {
-    studentList.browseForward();
+    try
+    {
+        studentList.browseForward();
+    }
+    catch (const char *e)
+    {
+        std::cout << e << std::endl;
+        return;
+    }
 }
 void StudentProfilesManagement::browseBackward()
 {
-    studentList.browseBackward();
+    try
+    {
+        studentList.browseBackward();
+    }
+    catch (const char *e)
+    {
+        std::cout << e << std::endl;
+        return;
+    }
 }
 
 void StudentProfilesManagement::sendMessage(std::string recipientName, std::string message)
@@ -179,7 +199,14 @@ void StudentProfilesManagement::displayFriendList()
     if (currentProfile != nullptr)
     {
         std::cout << "\n--- Friend List for: " << currentProfile->getStudentName() << " ---\n";
-        currentProfile->displayFriendList();
+        try
+        {
+            currentProfile->displayFriendList();
+        }
+        catch (const char *e)
+        {
+            std::cout << e << std::endl;
+        }
     }
 }
 
