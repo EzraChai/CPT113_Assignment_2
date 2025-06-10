@@ -120,8 +120,7 @@ public:
     {
         if (current == nullptr)
         {
-            throw "Current node is not set.\n"; // Throw an error if current is nullptr
-            return nullptr;                     // Return nullptr if current is not set
+            return nullptr; // Return nullptr if current is not set
         }
         return current->data; // Return the current node
     }
@@ -196,6 +195,18 @@ public:
             nodePtr->data->printProfile(); // Assuming T has a printProfile method
             nodePtr = nodePtr->next;       // Move to the next node
         }
+    }
+
+    int getCount() const
+    {
+        int count = 0;
+        Node *nodePtr = head;
+        while (nodePtr != nullptr)
+        {
+            count++;
+            nodePtr = nodePtr->next; // Move to the next node
+        }
+        return count; // Return the count of nodes
     }
 };
 

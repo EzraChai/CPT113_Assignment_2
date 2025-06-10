@@ -28,12 +28,14 @@ public:
     void displayInboxMessages();
     void displaySentMessages();
     void undoLastAction();
+    StudyGroup *searchStudyGroup(std::string groupName);
     void rotateStudyGroupMembers();
     void displayCurrentStudentProfile();
     void browseForward();
     void browseBackward();
     void displayStudyGroupMembers();
     void displayFriendList();
+    int getStudentCount() const;
 };
 
 #endif

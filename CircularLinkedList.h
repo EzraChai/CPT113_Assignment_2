@@ -136,13 +136,19 @@ public:
 
     T *getCurrentNode() const
     {
-        if (currentNode)
+        if (!tail || count == 0)
         {
-            // Optionally print debug info:
-            return currentNode->data;
+            throw "List is empty. Cannot get current node.\n";
+            return nullptr;
         }
-        throw "Current node is not set.\n";
-        return nullptr;
+
+        if (currentNode == nullptr)
+        {
+            throw "Current node is not set.\n";
+            return nullptr;
+        }
+
+        return currentNode->data;
     }
 
     void removeFront()

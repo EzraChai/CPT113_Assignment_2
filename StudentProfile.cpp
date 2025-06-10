@@ -156,7 +156,7 @@ void StudentProfile::addFriend(StudentProfile *friendProfile)
         throw "This student is already your friend.\n";
         return;
     }
-    if(this == friendProfile)
+    if (this == friendProfile)
     {
         throw "You cannot add yourself as a friend.\n";
         return;
