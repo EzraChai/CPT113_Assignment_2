@@ -85,6 +85,7 @@ void Undo::popAction(DoublyLinkedList<StudentProfile> &studentList, CircularLink
             sp2->deleteFriend(sp);
             undoStack.pop();
             std::cout << "Undoing last action: Adding friend" << std::endl;
+            break;
         }
 
         case ActionType::SEND_MESSAGE:
