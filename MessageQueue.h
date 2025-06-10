@@ -77,7 +77,7 @@ void MessageQueue<T>::dequeue()
 {
     if (isEmpty())
     {
-        std::cout << "Message queue is empty. Cannot dequeue." << std::endl;
+        throw "MessageQueue is empty. Cannot dequeue.\n";
         return;
     }
     MessageNode *temp = front;
@@ -97,7 +97,7 @@ T *MessageQueue<T>::peek()
 {
     if (isEmpty())
     {
-        std::cout << "Message queue is empty. Cannot peek." << std::endl;
+        throw "MessageQueue is empty. Cannot peek.\n";
         return nullptr;
     }
     return &front->message;

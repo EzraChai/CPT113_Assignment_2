@@ -96,6 +96,10 @@ public:
 
     T *getCurrentNode() const
     {
+        if (current == nullptr)
+        {
+            return nullptr; // Return nullptr if current is not set
+        }
         return current->data; // Return the current node
     }
 

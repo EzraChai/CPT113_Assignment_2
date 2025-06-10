@@ -85,7 +85,7 @@ void StudentProfile::unsendSentMessage()
 {
     if (messageSent.isEmpty())
     {
-        std::cout << "No sent messages to unsend." << std::endl;
+        throw "No sent messages to unsend.\n";
         return;
     }
     int totalMessages = messageSent.getTotalMessages();
@@ -102,7 +102,7 @@ void StudentProfile::unsendInboxMessage()
 {
     if (messageInbox.isEmpty())
     {
-        std::cout << "No inbox messages to unsend." << std::endl;
+        throw "No inbox messages to unsend.\n";
         return;
     }
     int totalMessages = messageInbox.getTotalMessages();
@@ -124,7 +124,7 @@ void StudentProfile::displayFriendList()
 {
     if (!friendHead)
     {
-        std::cout << "No friends added yet." << std::endl;
+        throw "No friends added yet.\n";
         return;
     }
     FriendNode *current = friendHead;
@@ -174,7 +174,7 @@ void StudentProfile::deleteFriend(StudentProfile *friendProfile)
 {
     if (!friendHead)
     {
-        std::cout << "No friends to delete." << std::endl;
+        throw "No friends to delete.\n";
         return;
     }
     FriendNode *current = friendHead;
