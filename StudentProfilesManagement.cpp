@@ -47,6 +47,30 @@ void StudentProfilesManagement::searchStudentProfileByName(std::string name)
     }
 }
 
+void StudentProfilesManagement::searchFriendName(std::string friendName)
+{
+    if (!studentList.getCurrentNode())
+    {
+        throw "No current student profile selected.";
+        return;
+    }
+    StudentProfile *currentProfile = studentList.getCurrentNode();
+    if (currentProfile->getStudentName() == friendName)
+    {
+        throw "You cannot search for yourself.";
+        return;
+    }
+    StudentProfile *friendProfile = currentProfile->searchFriend(friendName);
+    if (friendProfile)
+    {
+        std::cout << "Friend is found: " << friendProfile->getStudentName() << std::endl;
+    }
+    else
+    {
+        throw "Friend not found.";
+    }
+}
+
 StudyGroup *StudentProfilesManagement::searchStudyGroup(std::string groupName)
 {
     try
@@ -199,9 +223,9 @@ void StudentProfilesManagement::sendMessage(std::string recipientName, std::stri
 
 void StudentProfilesManagement::addNewFriend(std::string friendName)
 {
-    StudentProfile *friendProfile = studentList.searchByName(friendName);
     try
     {
+        StudentProfile *friendProfile = studentList.searchByName(friendName);
         StudentProfile *currentProfile = studentList.getCurrentNode();
         if (currentProfile != nullptr)
         {

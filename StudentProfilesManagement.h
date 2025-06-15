@@ -24,6 +24,7 @@ public:
     void displayAllStudentProfiles();
     void searchStudentProfileByName(std::string name);
     void addNewFriend(std::string friendName);
+    void searchFriendName(std::string friendName);
     void sendMessage(std::string recipientName, std::string message);
     void displayInboxMessages();
     void displaySentMessages();

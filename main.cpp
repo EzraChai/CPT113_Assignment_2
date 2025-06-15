@@ -25,22 +25,23 @@ int main()
         std::cout << "4. Search student profile by name" << std::endl;
         std::cout << "\n----- Friend Options -----" << std::endl;
         std::cout << "5. Add friend" << std::endl;
-        std::cout << "6. View friend list" << std::endl;
+        std::cout << "6. Search friend" << std::endl;
+        std::cout << "7. View friend list" << std::endl;
         std::cout << "\n----- Message Options -----" << std::endl;
-        std::cout << "7. Send a message to another student" << std::endl;
-        std::cout << "8. View message inbox" << std::endl;
-        std::cout << "9. View message sent" << std::endl;
+        std::cout << "8. Send a message to another student" << std::endl;
+        std::cout << "9. View message inbox" << std::endl;
+        std::cout << "10. View message sent" << std::endl;
         std::cout << "\n----- Undo Option -----" << std::endl;
-        std::cout << "10. Undo last action" << std::endl;
+        std::cout << "11. Undo last action" << std::endl;
         std::cout << "\n----- Study Group Options -----" << std::endl;
-        std::cout << "11. View or rotate through study group members" << std::endl;
-        std::cout << "12. Search study group" << std::endl;
+        std::cout << "12. View or rotate through study group members" << std::endl;
+        std::cout << "13. Search study group" << std::endl;
         std::cout << "\n----- Browse Options -----" << std::endl;
-        std::cout << "13. Browse Next Student" << std::endl;
-        std::cout << "14. Browse Previous Student" << std::endl;
-        std::cout << "\n----- Exit Options -----" << std::endl;
-        std::cout << "15. Exit the application" << std::endl;
-        std::cout << "\nPlease select an option (1-15): ";
+        std::cout << "14. Browse Next Student" << std::endl;
+        std::cout << "15. Browse Previous Student" << std::endl;
+        std::cout << "\n----- Exit -----" << std::endl;
+        std::cout << "16. Exit the application" << std::endl;
+        std::cout << "\nPlease select an option (1-16): ";
         std::cin >> userSelection;
         std::cin.ignore();
 
@@ -118,15 +119,35 @@ int main()
             // std::cout << "\nFriend added...\n" << std::endl;
             break;
         }
-
         case 6:
+        {
+            if (spf.getStudentCount() == 0)
+            {
+                std::cout << "\nNo current student profile selected." << std::endl;
+                break;
+            }
+            std::string friendName;
+            std::cout << "Friend Name: ";
+            std::getline(std::cin, friendName);
+            try
+            {
+                spf.searchFriendName(friendName);
+            }
+            catch (const char *e)
+            {
+                std::cout << e << std::endl;
+            }
+            break;
+        }
+
+        case 7:
         {
             std::cout << "\nViewing friend list..." << std::endl;
             spf.displayFriendList();
             break;
         }
 
-        case 7:
+        case 8:
         {
             if (spf.getStudentCount() == 0)
             {
@@ -159,7 +180,7 @@ int main()
             break;
         }
 
-        case 8:
+        case 9:
         {
             try
             {
@@ -172,7 +193,7 @@ int main()
             break;
         }
 
-        case 9:
+        case 10:
         {
             try
             {
@@ -185,13 +206,13 @@ int main()
             break;
         }
 
-        case 10:
+        case 11:
         {
             spf.undoLastAction();
             break;
         }
 
-        case 11:
+        case 12:
         {
             char selection = 'Y';
             std::cout << "\nViewing or rotating through study group members..." << std::endl;
@@ -217,7 +238,7 @@ int main()
             } while (selection != 'N');
             break;
         }
-        case 12:
+        case 13:
         {
             std::string groupName;
             std::cout << "\nSearching Study Group..." << std::endl;
@@ -231,20 +252,20 @@ int main()
             break;
         }
 
-        case 13:
+        case 14:
         {
             std::cout << "\nBrowsing Forward..." << std::endl;
             spf.browseForward();
             break;
         }
 
-        case 14:
+        case 15:
         {
             std::cout << "\nBrowsing Backward..." << std::endl;
             spf.browseBackward();
             break;
         }
-        case 15:
+        case 16:
         {
             std::cout << "\nExiting the application...";
             return 0;
@@ -254,7 +275,7 @@ int main()
             break;
         }
 
-    } while (choice != 15);
+    } while (choice != 16);
 
     return 0;
 }

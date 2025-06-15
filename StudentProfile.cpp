@@ -135,6 +135,20 @@ void StudentProfile::displayFriendList()
     }
 }
 
+StudentProfile *StudentProfile::searchFriend(std::string friendName)
+{
+    FriendNode *current = friendHead;
+    while (current)
+    {
+        if (current->friendProfile->getStudentName() == friendName)
+        {
+            return current->friendProfile; // Return the friend profile if found
+        }
+        current = current->nextFriend;
+    }
+    return nullptr; // Return nullptr if not found
+}
+
 bool StudentProfile::isFriend(const StudentProfile *friendProfile) const
 {
     FriendNode *current = friendHead;

@@ -45,6 +45,7 @@ public:
     void addFriend(StudentProfile *friendProfile);
     void deleteFriend(StudentProfile *friendProfile);
     void deleteAllFriends();
+    StudentProfile *searchFriend(std::string friendName);
 
     void sendToSentMessage(std::string message, const std::string recipientName);
     void sendToInboxMessage(std::string message, const std::string senderName);
