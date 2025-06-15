@@ -11,6 +11,16 @@ StudentProfilesManagement::~StudentProfilesManagement()
 
 void StudentProfilesManagement::createStudentProfile(std::string studentId, std::string name, std::string course)
 {
+    if (studentId.empty() || name.empty() || course.empty())
+    {
+        throw "Student ID, Name, and Course cannot be empty.";
+    }
+
+    if (studentList.checkIdAndName(studentId, name) == true)
+    {
+        throw "A student profile with the same ID or name already exists.";
+    }
+
     StudentProfile *newProfile = new StudentProfile(studentId, name, course);
     studentList.insertNode(newProfile);
     undo.pushAction({ActionType::CREATE_PROFILE, newProfile});
@@ -199,18 +209,30 @@ void StudentProfilesManagement::sendMessage(std::string recipientName, std::stri
     {
         throw "No student profiles available.";
     }
+    StudentProfile *currentProfile = studentList.getCurrentNode();
+
+    if (currentProfile->friendCount() == 0)
+    {
+        throw "You have no friends to send messages to.";
+    }
 
     StudentProfile *recipientProfile = studentList.searchByName(recipientName);
-    StudentProfile *currentProfile = studentList.getCurrentNode();
 
     if (recipientProfile == nullptr)
     {
         throw "Recipient profile not found.";
     }
+
     if (recipientProfile->getStudentName() == currentProfile->getStudentName())
     {
         throw "Cannot send a message to yourself.";
     }
+
+    if (currentProfile->isFriend(recipientProfile) == false)
+    {
+        throw "You can only send messages to your friends.";
+    }
+
     if (message.empty())
     {
         throw "Message cannot be empty.";

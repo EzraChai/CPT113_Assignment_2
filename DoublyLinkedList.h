@@ -24,7 +24,8 @@ public:
     void browseForward();
     void browseBackward();
     T *getCurrentNode() const;
-    T *searchByName(std::string name);
+    T *searchByName(std::string name) const;
+    bool checkIdAndName(std::string studentId, std::string name) const;
     void deleteNode(T *&node);
     void displayAllNodes();
     int getCount() const;
@@ -170,7 +171,7 @@ T *DoublyLinkedList<T>::getCurrentNode() const
     Throws an error if the student profile is not found
 */
 template <class T>
-T *DoublyLinkedList<T>::searchByName(std::string name)
+T *DoublyLinkedList<T>::searchByName(std::string name) const
 {
     Node *nodePtr = head;
     while (nodePtr != nullptr)
@@ -183,6 +184,31 @@ T *DoublyLinkedList<T>::searchByName(std::string name)
     }
     throw "Student profile not found.\n"; // Throw an error if not found
     return nullptr;                       // Return nullptr if not found
+}
+
+/*
+    Checks if a student ID and name match any node in the doubly linked list
+    Returns true if a match is found, false otherwise
+    Assumes T has getStudentId and getStudentName methods
+*/
+template <class T>
+bool DoublyLinkedList<T>::checkIdAndName(std::string studentId, std::string name) const
+{
+    if (head == nullptr) // If the list is empty
+    {
+        return false; // Return false if the list is empty
+    }
+
+    Node *nodePtr = head;
+    while (nodePtr != nullptr)
+    {
+        if (nodePtr->data->getStudentId() == studentId || nodePtr->data->getStudentName() == name) // Assuming T has getStudentId and getStudentName methods
+        {
+            return true; // Return true if both ID and name match
+        }
+        nodePtr = nodePtr->next; // Move to the next node
+    }
+    return false; // Return false if not found
 }
 
 /*

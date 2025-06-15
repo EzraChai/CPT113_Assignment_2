@@ -5,13 +5,13 @@
 int main()
 {
     StudentProfilesManagement spf;
-    spf.createStudentProfile("24863293", "Chloe", "Software Engineering");
-    spf.createStudentProfile("24863293", "Ezra", "Software Engineering");
-    spf.createStudentProfile("24863293", "John", "Software Engineering");
-    spf.createStudentProfile("24863293", "Zedd", "Intelligent Computing");
-    spf.createStudentProfile("24863293", "Moses", "Computer Infrastructure");
-    spf.createStudentProfile("24863293", "Jenny", "Computer Infrastructure");
-    spf.createStudentProfile("24863293", "Winny", "Intelligent Computing");
+    spf.createStudentProfile("24863293", "Chadler", "Software Engineering");
+    spf.createStudentProfile("24863294", "Ezra", "Software Engineering");
+    spf.createStudentProfile("24863295", "Huam Jun Fei", "Software Engineering");
+    spf.createStudentProfile("24863296", "Zedd", "Intelligent Computing");
+    spf.createStudentProfile("24863298", "Dennis", "Computer Infrastructure");
+    spf.createStudentProfile("24863299", "Jenny", "Computer Infrastructure");
+    spf.createStudentProfile("24863210", "Winny", "Intelligent Computing");
 
     std::string userSelection;
     int choice;
@@ -28,7 +28,7 @@ int main()
         std::cout << "6. Search friend" << std::endl;
         std::cout << "7. View friend list" << std::endl;
         std::cout << "\n----- Message Options -----" << std::endl;
-        std::cout << "8. Send a message to another student" << std::endl;
+        std::cout << "8. Send a message to a friend" << std::endl;
         std::cout << "9. View message inbox" << std::endl;
         std::cout << "10. View message sent" << std::endl;
         std::cout << "\n----- Undo Option -----" << std::endl;
@@ -67,7 +67,15 @@ int main()
             std::getline(std::cin, name);
             std::cout << "Course: ";
             std::getline(std::cin, course);
-            spf.createStudentProfile(studentID, name, course);
+            try
+            {
+                spf.createStudentProfile(studentID, name, course);
+            }
+            catch (const char *e)
+            {
+                std::cout << e << std::endl;
+                continue; // Skip to the next iteration of the loop
+            }
             std::cout << "\nStudent Profile Created..." << std::endl;
             break;
         }
@@ -160,8 +168,8 @@ int main()
                 try
                 {
                     std::string otherName, message;
-                    std::cout << "\nSending message to other student..." << std::endl;
-                    std::cout << "Enter recipient's name: ";
+                    std::cout << "\nSending message to your friend..." << std::endl;
+                    std::cout << "Enter friend's name: ";
                     std::getline(std::cin, otherName);
                     std::cout << "Enter message: ";
                     std::getline(std::cin, message);
@@ -173,10 +181,19 @@ int main()
                     sent = false;
                     std::cout << "\nMessage not sent..." << std::endl;
                     std::cout << "\nError: " << e << std::endl;
+                    if (e == std::string("You have no friends to send messages to."))
+                    {
+                        std::cout << "Please add friends first." << std::endl;
+                        break; // Exit the loop if no friends are available
+                    }
+                    std::cout << "Please try again." << std::endl;
+                    continue; // Continue to the next iteration of the loop
                 }
             }
-
-            std::cout << "\nMessage sent successfully..." << std::endl;
+            if (sent)
+            {
+                std::cout << "\nMessage sent successfully..." << std::endl;
+            }
             break;
         }
 

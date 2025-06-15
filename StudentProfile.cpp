@@ -163,6 +163,18 @@ bool StudentProfile::isFriend(const StudentProfile *friendProfile) const
     return false;
 }
 
+int StudentProfile::friendCount() const
+{
+    int count = 0;
+    FriendNode *current = friendHead;
+    while (current)
+    {
+        count++;
+        current = current->nextFriend;
+    }
+    return count; // Return the total number of friends
+}
+
 void StudentProfile::addFriend(StudentProfile *friendProfile)
 {
     if (isFriend(friendProfile))
