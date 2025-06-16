@@ -1,7 +1,6 @@
 #ifndef STUDENTPROFILE_H
 #define STUDENTPROFILE_H
 #include <string>
-#include <ctime>
 #include "MessageQueue.h"
 
 class StudentProfile

@@ -220,7 +220,7 @@ bool DoublyLinkedList<T>::checkIdAndName(std::string studentId, std::string name
 template <class T>
 void DoublyLinkedList<T>::deleteNode(T *&node)
 {
-    if (head == nullptr) // If the list is empty
+    if (head == nullptr || tail == nullptr) // If the list is empty
     {
         throw "List is empty. Cannot delete node.\n";
         return;
@@ -238,14 +238,12 @@ void DoublyLinkedList<T>::deleteNode(T *&node)
             if (nodePtr == head) // If it's the head node
             {
                 head = nodePtr->next;
-                if (head != nullptr)
-                    head->prev = nullptr; // Update the new head's prev pointer
+                head->prev = nullptr; // Update the new head's prev pointer
             }
             else if (nodePtr == tail) // If it's the tail node
             {
                 tail = nodePtr->prev;
-                if (tail != nullptr)
-                    tail->next = nullptr; // Update the new tail's next pointer
+                tail->next = nullptr; // Update the new tail's next pointer
             }
             else // If it's a middle node
             {
