@@ -3,6 +3,8 @@
 #include <string>
 #include <ctime>
 #include <iostream>
+#include <iomanip>
+#include <sstream>
 
 template <class T>
 class MessageQueue
@@ -117,9 +119,10 @@ void MessageQueue<T>::displayMessages()
     while (current)
     {
         time_t timestamp = current->message.timestamp;
-        char formattedTime[20];
-        std::strftime(formattedTime, sizeof(formattedTime), "%H:%M:%S %D", std::localtime(&timestamp));
-        std::cout << current->message.name << " - " << current->message.body << " - " << formattedTime << std::endl;
+        std::ostringstream oss;
+        std::tm *tm_info = std::localtime(&timestamp);
+        oss << std::put_time(tm_info, "%H:%M:%S %D");
+        std::cout << current->message.name << " - " << current->message.body << " - " << oss.str() << std::endl;
         current = current->next;
     }
     std::cout << "Total messages: " << totalMessages << std::endl;
